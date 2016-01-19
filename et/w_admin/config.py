@@ -9,3 +9,6 @@ import os
 
 # 第三方包路径
 third_party_path = os.path.abspath(os.path.join(__file__, '../third_parties'))
+
+# session cookie key
+session_cookie_key = 'SESSION'

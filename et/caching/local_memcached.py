@@ -15,7 +15,7 @@ class LocalMemcached(CacheBase):
         本地memcached缓存
     '''
     def __init__(self):
-        super(self.__class__, self).__init__(host, port)
+        super(LocalMemcached, self).__init__(host, port)
 
     def _create_client(self):
         return bmemcached.Client(('%s:%s' % (host, port)))

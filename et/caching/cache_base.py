@@ -10,7 +10,7 @@ class CacheBase(object):
     def __init__(self, host='127.0.0.1', port=11211):
         self.host = host
         self.port = port
-        self.__client = self._create_client()
+        self._client = self._create_client()
 
     def set(self, key, val, expire_seconds=None, expire_days=None):
         u'''
@@ -30,7 +30,7 @@ class CacheBase(object):
         else:
             expires = 0
 
-        self.__client.set(key, val, time=expires)
+        self._client.set(key, val, time=expires)
 
     def get(self, key):
         u'''
@@ -39,7 +39,7 @@ class CacheBase(object):
                 key：键
             返回值：缓存的值
         '''
-        return self.__client.get(key)
+        return self._client.get(key)
 
     def _create_client(self):
         u'''
