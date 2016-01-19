@@ -70,7 +70,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
                 // Remove the middle elements
                 $('li:gt(0)', an[i]).filter(':not(:last)').remove();
  
-                // Add the new list items and their event handlers
+                // Add the new list items and their event handler
                 for ( j=iStart ; j<=iEnd ; j++ ) {
                     sClass = (j==oPaging.iPage+1) ? 'class="active"' : '';
                     $('<li '+sClass+'><a href="#">'+j+'</a></li>')
