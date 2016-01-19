@@ -42,7 +42,14 @@ class LocalCache(CacheBase):
                 key：键
             返回值：缓存的值
         '''
-        return self.__client.get(key)
+        val, expires = self.__client.get(key)
+
+        # 过期处理
+        if expires < datetime.now():
+            self.__client.pop(key, None)
+            val = None
+
+        return val
 
     def _create_client(self):
         return {}
