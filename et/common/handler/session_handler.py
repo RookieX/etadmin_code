@@ -6,9 +6,9 @@ u'''
     session基类
 '''
 
-from . import base_handler
+from .base_handler import BaseHandler
 
 
-class SessionHandler(base_handler.BaseHandler):
+class SessionHandler(BaseHandler):
     def __init__(self, application, request, **kwargs):
         super(SessionHandler, self).__init__(application, request, **kwargs)
