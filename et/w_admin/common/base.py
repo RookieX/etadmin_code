@@ -21,6 +21,16 @@ class AdminHandlerBase(SessionHandler):
                 permission：要检查的权限
         '''
 
+    def write_error(self, status_code=500, **kwargs):
+        if status_code == 404:
+            self.write(u'页面找不到')
+        elif status_code == 400:
+            self.write(u'请求缺少参数')
+        elif status_code == 500:
+            self.write(u'服务器出错')
+        else:
+            super(AdminHandlerBase, self).send_error(status_code, **kwargs)
+
 
 def authentication(permission, fail):
     u'''
