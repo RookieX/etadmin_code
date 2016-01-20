@@ -27,6 +27,34 @@ def open_write_db():
     return WriteConnection(**_write_db_config)
 
 
+def query(sql, params=None):
+    u'''
+        执行sql，返回数据库记录
+    '''
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(sql, params)
+        return cursor.fetchall()
+
+
+def query_one(sql, params=None):
+    u'''
+        执行sql，只返回一条数据库记录。
+        如果没有数据，返回None
+    '''
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        if cursor.execute(sql, params):
+            return cursor.fetchone()
+        return None
+
+
+def query_scalar(sql, params=None): pass
+
+
+def execute_non_query(sql, params=None): pass
+
+
 class MySqlDbConnBase(MySQLdb.connections.Connection):
     u'''
         mysql connection基类
@@ -34,6 +62,12 @@ class MySqlDbConnBase(MySQLdb.connections.Connection):
 
     def __init__(self, *args, **kwargs):
         super(MySqlDbConnBase, self).__init__(*args, **kwargs)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
 
 
 class ReadConnection(MySqlDbConnBase):
@@ -66,3 +100,6 @@ _write_db_config = {
     'passwd': config.write_db_pwd,
     'db': config.write_db_name
 }
+
+if __name__ == '__main__':
+    print query_one('select * from admin_user')
