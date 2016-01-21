@@ -2,15 +2,12 @@
 # Date: 16-1-18
 # Author: 徐鹏程
 
-from et.common.handler import session_handler
 from et.common.routing import url_route
 from et.common.helper import ajax_helper
 
 from et.bll.admin import AdminUserBLL
-from et.model import AdminUser
 
-from et.w_admin.common.base import AdminHandlerBase, authentication
-from et.w_admin.common import common_response
+from et.w_admin.common.base import AdminHandlerBase
 from et.w_admin.common.helper import admin_helper
 
 
@@ -32,6 +29,6 @@ class LoginHandler(AdminHandlerBase):
 
         admin_helper.set_login_session(self, user)
 
-        session_user = admin_helper.get_login_session(self)
+        from_url = self.get_argument('from_url', '/')
 
-        ajax_helper.write_json(self, 0, data={'redirect': '/'})
+        ajax_helper.write_json(self, 0, data={'redirect': from_url})

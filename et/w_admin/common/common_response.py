@@ -6,6 +6,8 @@ u'''
     通用响应
 '''
 
+import urllib
+
 from et.common.helper import ajax_helper
 
 
@@ -24,3 +26,17 @@ def resp_auth_fail_regular(handler):
         权限认证失败一般响应
     '''
     handler.write(u'没有权限')
+
+
+def resp_need_login_json(handler):
+    u'''
+        需要登录ajax响应
+    '''
+    ajax_helper.write_json(handler, status=1, msg=u'请先登录')
+
+
+def resp_need_login_regular(handler):
+    u'''
+        需要登录一般响应
+    '''
+    handler.redirect('/login?from_url=' + urllib.quote_plus(handler.request.uri))

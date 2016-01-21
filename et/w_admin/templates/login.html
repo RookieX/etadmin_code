@@ -112,9 +112,8 @@
                 $(form).ajaxSubmit({
                     success: function (resp) {
                         if (resp.status === 0) {
-                            var redirect_url = resp.redirect ? resp.redirect : '/';
+                            var redirect_url = resp.data.redirect ? resp.data.redirect : '/';
                             window.location.href = redirect_url;
-
                         } else {
                             alert(resp.msg);
                         }

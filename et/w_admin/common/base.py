@@ -9,6 +9,8 @@ u'''
 from et.common.extend.type_extend import dynamic
 from et.common.handler.session_handler import SessionHandler
 
+from et.w_admin.common.helper import admin_helper
+
 
 class AdminHandlerBase(SessionHandler):
     u'''
@@ -67,8 +69,12 @@ def login(fail):
     '''
 
     def _wrapper(func):
-        def __wrapper(self,*args, **kwargs):
-            session_key = self.get
+        def __wrapper(handler, *args, **kwargs):
+            user = admin_helper.get_login_session(handler)
+            if user:
+                return func(handler, *args, **kwargs)
+            else:
+                return fail(handler, *args, **kwargs)
 
         return __wrapper
 
