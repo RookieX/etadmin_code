@@ -17,6 +17,7 @@ class AdminUser(ModelBase):
         self.__department = null
         self.__position = null
         self.__parent_position = null
+        self.__permissions = []
 
     @property
     def user_name(self):
@@ -89,3 +90,11 @@ class AdminUser(ModelBase):
     @parent_position.setter
     def parent_position(self, value):
         self.__parent_position = value
+
+    @property
+    def permissions(self):
+        return self.__permissions
+
+    @permissions.setter
+    def permissions(self, value):
+        self.__permissions = value
