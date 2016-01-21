@@ -30,6 +30,8 @@ class LoginHandler(AdminHandlerBase):
 
         user = AdminUserBLL.query_by_user_name(args['user_name'])
 
-        admin_helper.set_user_session(self, user)
+        admin_helper.set_login_session(self, user)
+
+        session_user = admin_helper.get_login_session(self)
 
         ajax_helper.write_json(self, 0, data={'redirect': '/'})

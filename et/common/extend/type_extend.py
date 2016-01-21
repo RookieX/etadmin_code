@@ -60,4 +60,4 @@ class Dynamic(object):
 
 
 null = Null()
-dynamic = Dynamic()
+dynamic = Dynamic

@@ -40,7 +40,6 @@ class AdminUserDAL(object):
 
         sql = u'''
             SELECT
-                id,
                 user_name,
                 display_name,
                 password,

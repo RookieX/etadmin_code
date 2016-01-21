@@ -6,24 +6,18 @@ u'''
     后台通用方法
 '''
 
-import uuid
-
 from et.w_admin import config
 
 
-def set_user_session(handler, user_info):
+def set_login_session(handler, user_info):
     u'''
-        设置用户信息session
+        设置用户登录信息session
     '''
-
-    session_key = str(uuid.uuid1())
-
-    handler.set_cookie(config.session_cookie_key, session_key)
-    handler.cache.set(session_key, user_info, expire_seconds=1200)
+    handler.set_session(config.login_session_key, user_info)
 
 
-def get_user_info_from_session(handler, key):
+def get_login_session(handler):
     u'''
-        从缓存中获取用户信息
+        从session中获取用户登录信息
     '''
-    return handler.cache.get(key)
+    return handler.get_session(config.login_session_key)

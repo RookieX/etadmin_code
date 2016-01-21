@@ -36,7 +36,8 @@ def make_settings():
         'autoreload': True,
         'handlers': url_route.route.routes(),
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),
-        'template_path': os.path.join(os.path.dirname(__file__), 'templates')
+        'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
+        'cookie_secret': '190qweasd$%^RTYFGH'
     }
 
 

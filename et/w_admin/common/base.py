@@ -6,6 +6,7 @@ u'''
     后台相关基类
 '''
 
+from et.common.extend.type_extend import dynamic
 from et.common.handler.session_handler import SessionHandler
 
 
@@ -13,6 +14,14 @@ class AdminHandlerBase(SessionHandler):
     u'''
         后台handler基类
     '''
+
+    def __init__(self, *args, **kwargs):
+        super(AdminHandlerBase, self).__init__(*args, **kwargs)
+
+        self.bag = dynamic()
+
+    def render(self, template_name):
+        super(AdminHandlerBase, self).render(template_name, bag=self.bag)
 
     def check_auth(self, permission):
         u'''
@@ -46,6 +55,20 @@ def authentication(permission, fail):
                 func(*args, **kwargs)
             else:
                 fail(*args, **kwargs)
+
+        return __wrapper
+
+    return _wrapper
+
+
+def login(fail):
+    u'''
+        登录验证装饰器
+    '''
+
+    def _wrapper(func):
+        def __wrapper(self,*args, **kwargs):
+            session_key = self.get
 
         return __wrapper
 

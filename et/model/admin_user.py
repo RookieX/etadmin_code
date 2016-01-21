@@ -8,7 +8,6 @@ from .model_base import ModelBase
 
 class AdminUser(ModelBase):
     def __init__(self):
-        self.__id = null
         self.__user_name = null
         self.__display_name = null
         self.__password = null
@@ -18,14 +17,6 @@ class AdminUser(ModelBase):
         self.__department = null
         self.__position = null
         self.__parent_position = null
-
-    @property
-    def id(self):
-        return self.__id
-
-    @id.setter
-    def id(self, value):
-        self.__id = value
 
     @property
     def user_name(self):
