@@ -7,6 +7,7 @@ from et.common.routing import url_route
 from et.common.helper import ajax_helper
 
 from et.bll.admin import AdminUserBLL
+from et.model import AdminUser
 
 from et.w_admin.common.base import AdminHandlerBase, authentication
 from et.w_admin.common import common_response
@@ -24,7 +25,7 @@ class LoginHandler(AdminHandlerBase):
         if not args['user_name'] or not args['password']:
             return ajax_helper.write_json(self, -1, u'用户名或密码不能为空')
 
-        if not AdminUserBLL.login(*args):
+        if not AdminUserBLL.login(**args):
             return ajax_helper.write_json(self, -2, u'用户名或密码错误')
 
         user = AdminUserBLL.query_by_user_name(args['user_name'])

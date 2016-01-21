@@ -7,4 +7,21 @@ u'''
 '''
 
 
-class ModelBase(object): pass
+class ModelBase(object):
+    u'''
+        Model基类，提供Model通用属性和方法
+    '''
+
+    @classmethod
+    def build_from_dict(cls, properties):
+        u'''
+            利用字典对象构造Model
+        '''
+
+        obj = cls()
+
+        for name, value in properties.items():
+            if hasattr(obj, name):
+                setattr(obj, name, value)
+
+        return obj

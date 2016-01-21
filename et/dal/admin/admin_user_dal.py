@@ -3,6 +3,7 @@
 # Author: 徐鹏程
 
 from ...sql_helper import mysql_helper
+from ...model import AdminUser
 
 
 class AdminUserDAL(object):
@@ -19,7 +20,7 @@ class AdminUserDAL(object):
         '''
 
         sql = u'''
-            SELECT COUNT(*) FROM AdminUser
+            SELECT COUNT(*) FROM admin_user
             WHERE user_name = %s AND `password` = %s
         '''
 
@@ -55,4 +56,7 @@ class AdminUserDAL(object):
 
         args = (user_name,)
 
-        return mysql_helper.query_one(sql, args)
+        user = mysql_helper.query_one(sql, args)
+
+        if user:
+            return AdminUser.build_from_dict(user)

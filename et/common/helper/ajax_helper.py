@@ -16,4 +16,4 @@ def write_json(handler, status, msg='', data=None):
     '''
 
     handler.set_header('Content-Type', 'application/json')
-    handler.write(json.dumps({'status': status, 'msg': msg, data: data}))
+    handler.write(json.dumps({'status': status, 'msg': msg, 'data': data}))

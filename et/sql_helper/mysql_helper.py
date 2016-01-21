@@ -43,34 +43,6 @@ class WriteConnection(MySqlDbConnBase):
     '''
 
 
-def read_db(func):
-    u'''
-        只读库装饰器
-    '''
-
-    @functools.wraps(func)
-    def _wrapper(*args, **kwargs):
-        with open_read_db() as db:
-            cursor = db.cursor(MySQLdb.cursors.DictCursor)
-            return func(cursor, *args, **kwargs)
-
-    return _wrapper
-
-
-def write_db(func):
-    u'''
-        可写库装饰器
-    '''
-
-    @functools.wraps(func)
-    def _wrapper(*args, **kwargs):
-        with open_write_db() as db:
-            cursor = db.cursor(MySQLdb.cursors.DictCursor)
-            return func(cursor, *args, **kwargs)
-
-    return _wrapper
-
-
 def open_read_db():
     u'''
         打开只读库
@@ -85,39 +57,40 @@ def open_write_db():
     return WriteConnection(**_write_db_config)
 
 
-@read_db
-def query(db, sql, params=None):
+def query(sql, params=None):
     u'''
         执行sql，返回数据库记录
     '''
-    db.execute(sql, params)
-    return db.fetchall()
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(sql, params)
+        return cursor.fetchall()
 
 
-@read_db
-def query_one(db, sql, params=None):
+def query_one(sql, params=None):
     u'''
         执行sql，只返回一条数据库记录。
         如果没有数据，返回None
     '''
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        if cursor.execute(sql, params):
+            return cursor.fetchone()
+        return None
 
-    if db.execute(sql, params):
-        return db.fetchone()
-    return None
 
-
-@read_db
-def query_scalar(db, sql, params=None):
+def query_scalar(sql, params=None):
     u'''
         执行sql，返回第一行第一列的值。
         如果没有数据，返回None
     '''
-    if db.execute(sql, params):
-        if db.rowcount:
-            row, first_column = db.fetchone(), db.description[0][0]
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        if cursor.execute(sql, params):
+            row, first_column = cursor.fetchone(), cursor.description[0][0]
             return row[first_column]
 
-    return None
+        return None
 
 
 def execute_non_query(db, sql, params=None): pass
@@ -144,4 +117,6 @@ _write_db_config = {
 }
 
 if __name__ == '__main__':
-    print query_scalar('select user_name,display_name from admin_user')
+    with open_read_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        print cursor.execute('select * from admin_user')
