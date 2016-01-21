@@ -32,4 +32,4 @@ class LoginHandler(AdminHandlerBase):
 
         admin_helper.set_user_session(self, user)
 
-        ajax_helper.write_json(self, 0)
+        ajax_helper.write_json(self, 0, data={'redirect': '/'})
