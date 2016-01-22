@@ -7,6 +7,8 @@ from ...caching import build_cache_key
 from ...caching.local_cache import LocalCache
 
 from ...dal.admin import AdminUserDAL
+from ...dal.admin import PermissionDAL
+from ...dal.admin import MenuDAL
 
 import config
 
@@ -31,18 +33,20 @@ class AdminUserBLL(object):
         return AdminUserDAL.login_exists(user_name, pwd)
 
     @staticmethod
-    def query_by_user_name(user_name):
-        u'''
-        根据用户名查找用户信息
+    def query_full_by_user_name(user_name):
+        u"""
+        根据用户名查找用户信息，包括基本信息，菜单和权限
 
         :param user_name: 用户名
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
-        '''
+        """
         cache_key = build_cache_key(config.cache_prefix)
         user = cache.get(cache_key)
         if not user:
             user = AdminUserDAL.query_by_user_name(user_name)
+            user.permissions = PermissionDAL.query_by_user_name(user_name)
+            user.menus = MenuDAL.query_by_user_name(user_name)
             if user:
                 cache.set(cache_key, user, expire_seconds=config.default_cache_seconds)
 

@@ -31,6 +31,11 @@ class AdminHandlerBase(SessionHandler):
             参数：
                 permission：要检查的权限
         '''
+        user = admin_helper.get_login_session(self)
+        if not user:
+            return False
+
+        return _check_auth(permission, user.permissions)
 
     def write_error(self, status_code=500, **kwargs):
         if status_code == 404:
@@ -43,20 +48,24 @@ class AdminHandlerBase(SessionHandler):
             super(AdminHandlerBase, self).send_error(status_code, **kwargs)
 
 
-def authentication(permission, fail):
+def authentication(permission, no_perm_callback, fail_callback):
     u'''
         权限认证装饰器
         参数：
             permission：要验证的权限
-            fail：没有权限的处理
+            no_perm_callback：没有权限的处理
+            fail_callback：无法获取权限处理
     '''
 
     def _wrapper(func):
-        def __wrapper(*args, **kwargs):
-            if _check_auth(permission, []):
-                func(*args, **kwargs)
+        def __wrapper(handler, *args, **kwargs):
+            user = admin_helper.get_login_session(handler)
+            if not user:
+                return fail_callback(handler, *args, **kwargs)
+            if _check_auth(permission, user.permissions):
+                return func(handler, *args, **kwargs)
             else:
-                fail(*args, **kwargs)
+                return no_perm_callback(handler, *args, **kwargs)
 
         return __wrapper
 
@@ -90,7 +99,7 @@ def _check_auth(permission, user_permissions):
     '''
 
     for perm in user_permissions:
-        if perm == permission:
+        if perm.name == permission:
             return True
 
     return False

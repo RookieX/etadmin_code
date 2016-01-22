@@ -3,3 +3,5 @@
 # Author: 徐鹏程
 
 from .admin_user_dal import AdminUserDAL
+from .permission_dal import PermissionDAL
+from .menu_dal import MenuDAL

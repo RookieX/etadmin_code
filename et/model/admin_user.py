@@ -18,6 +18,7 @@ class AdminUser(ModelBase):
         self.__position = null
         self.__parent_position = null
         self.__permissions = []
+        self.menus = []
 
     @property
     def user_name(self):
@@ -98,3 +99,11 @@ class AdminUser(ModelBase):
     @permissions.setter
     def permissions(self, value):
         self.__permissions = value
+
+    @property
+    def menus(self):
+        return self.__menus
+
+    @menus.setter
+    def menus(self, value):
+        self.__menus = value

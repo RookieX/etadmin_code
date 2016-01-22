@@ -4,12 +4,13 @@
 
 from et.common.routing import url_route
 
-from et.w_admin.common import common_response
-from et.w_admin.common.base import AdminHandlerBase, login
+from et.w_admin.common import common_response, permissions
+from et.w_admin.common.base import AdminHandlerBase, authentication
 
 
 @url_route.route(r'/')
 class IndexHandler(AdminHandlerBase):
-    @login(common_response.resp_need_login_regular)
+    @authentication(permissions.perm_home, common_response.resp_auth_fail_regular,
+                    common_response.resp_need_login_regular)
     def get(self):
         self.render('index.html')

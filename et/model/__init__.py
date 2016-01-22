@@ -3,3 +3,5 @@
 # Author: 徐鹏程
 
 from .admin_user import AdminUser
+from .permission import Permission
+from .menu import Menu

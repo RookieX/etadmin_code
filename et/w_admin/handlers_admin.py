@@ -25,7 +25,7 @@ class LoginHandler(AdminHandlerBase):
         if not AdminUserBLL.login(**args):
             return ajax_helper.write_json(self, -2, u'用户名或密码错误')
 
-        user = AdminUserBLL.query_by_user_name(args['user_name'])
+        user = AdminUserBLL.query_full_by_user_name(args['user_name'])
 
         admin_helper.set_login_session(self, user)
 

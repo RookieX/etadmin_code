@@ -3,3 +3,4 @@
 # Author: 徐鹏程
 
 from .admin_user_bll import AdminUserBLL
+from .permission_bll import PermissionBLL
