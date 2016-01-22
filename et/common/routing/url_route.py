@@ -2,12 +2,15 @@
 # Date: 16-1-19
 # Author: 徐鹏程
 
-u'''
+u"""
     路由相关类
-'''
+"""
 
 
 class __UrlRoute(object):
+    u"""
+        Url路由
+    """
     __routes = {}
 
     def __init__(self, url_pattern):
@@ -19,6 +22,11 @@ class __UrlRoute(object):
 
     @classmethod
     def routes(cls):
+        u"""
+            返回路由表
+            
+            :return: 路由表
+        """
         return [(k, v) for k, v in cls.__routes.items()]
 
 

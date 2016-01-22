@@ -18,16 +18,18 @@ cache = LocalCache()
 class AdminUserBLL(object):
     @staticmethod
     def login(user_name, password):
-        u'''
-        登录
+        u"""
+        登录验证
 
         :param user_name: 用户名
         :param password: 密码
 
+        :type user_name: str
+        :type password: str
+
         :rtype: bool
         :return: 登录是否成功
-        '''
-
+        """
         pwd = encrypt_helper.password(password)
 
         return AdminUserDAL.login_exists(user_name, pwd)
@@ -38,6 +40,9 @@ class AdminUserBLL(object):
         根据用户名查找用户信息，包括基本信息，菜单和权限
 
         :param user_name: 用户名
+
+        :type user_name: str
+
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
         """

@@ -28,9 +28,12 @@ class WebApp(tornado.web.Application):
 
 
 def make_settings():
-    u'''
+    u"""
         tornado用到的配置信息
-    '''
+
+        :rtype: dict
+        :return: 配置字典
+    """
     return {
         'debug': True,
         'autoreload': True,
@@ -42,9 +45,9 @@ def make_settings():
 
 
 def main():
-    u'''
+    u"""
         启动应用程序
-    '''
+    """
     port = sys.argv[1]
 
     http_server = tornado.httpserver.HTTPServer(WebApp(), xheaders=True)

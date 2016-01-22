@@ -2,15 +2,15 @@
 # Date: 16-1-19
 # Author: 徐鹏程
 
-u'''
+u"""
     类型扩展
-'''
+"""
 
 
 class Null(object):
-    u'''
+    u"""
         空类型，无任何实际属性
-    '''
+    """
 
     def __str__(self):
         return ''
@@ -41,10 +41,10 @@ class Null(object):
 
 
 class Dynamic(object):
-    u'''
+    u"""
         动态类型，可添加任意属性。
         访问不存在的属性返回Null实例。
-    '''
+    """
 
     def __setattr__(self, key, value):
         super(Dynamic, self).__setattr__(key, value)

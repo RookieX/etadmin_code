@@ -2,9 +2,9 @@
 # Date: 16-1-19
 # Author: 徐鹏程
 
-u'''
+u"""
     后台相关基类
-'''
+"""
 
 from et.common.extend.type_extend import dynamic
 from et.common.handler import SessionHandler
@@ -13,24 +13,35 @@ from et.w_admin.common.helper import admin_helper
 
 
 class AdminHandlerBase(SessionHandler):
-    u'''
+    u"""
         后台handler基类
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
         super(AdminHandlerBase, self).__init__(*args, **kwargs)
 
         self.bag = dynamic()
 
-    def render(self, template_name):
-        super(AdminHandlerBase, self).render(template_name, bag=self.bag)
+    def render(self, template_path):
+        u"""
+            覆盖父类的render，提供bag统一给template传参数
+
+            :param template_path: template路径
+
+            :type template_path: str
+        """
+        super(AdminHandlerBase, self).render(template_path, bag=self.bag)
 
     def check_auth(self, permission):
-        u'''
+        u"""
             权限检查
-            参数：
-                permission：要检查的权限
-        '''
+
+            :param permission: 要检查的权限
+            :type permission: str
+
+            :rtype: bool
+            :return: 检查结果
+        """
         user = admin_helper.get_login_session(self)
         if not user:
             return False
@@ -49,13 +60,17 @@ class AdminHandlerBase(SessionHandler):
 
 
 def authentication(permission, no_perm_callback, fail_callback):
-    u'''
+    u"""
         权限认证装饰器
-        参数：
-            permission：要验证的权限
-            no_perm_callback：没有权限的处理
-            fail_callback：无法获取权限处理
-    '''
+
+        :param permission: 要验证的权限
+        :param no_perm_callback:没有权限的回调
+        :param fail_callback: 无法获取权限回调
+
+        :type permission: str
+        :type no_perm_callback: function
+        :type fail_callback: function
+    """
 
     def _wrapper(func):
         def __wrapper(handler, *args, **kwargs):
@@ -72,10 +87,14 @@ def authentication(permission, no_perm_callback, fail_callback):
     return _wrapper
 
 
-def login(fail):
-    u'''
+def login(non_callback):
+    u"""
         登录验证装饰器
-    '''
+
+        :param non_callback: 未登录回调
+
+        :type non_callback: function
+    """
 
     def _wrapper(func):
         def __wrapper(handler, *args, **kwargs):
@@ -83,7 +102,7 @@ def login(fail):
             if user:
                 return func(handler, *args, **kwargs)
             else:
-                return fail(handler, *args, **kwargs)
+                return non_callback(handler, *args, **kwargs)
 
         return __wrapper
 
@@ -91,12 +110,18 @@ def login(fail):
 
 
 def _check_auth(permission, user_permissions):
-    u'''
+    u"""
         验证用户权限
-        参数：
-            permission：要检查的权限
-            user_permissions：用户的所有权限
-    '''
+
+        :param permission: 要检查的权限
+        :param user_permissions: 用户的所有权限
+
+        :type permission: str
+        :type user_permissions: list
+
+        :rtype: bool
+        :return: 验证结果
+    """
 
     for perm in user_permissions:
         if perm.name == permission:

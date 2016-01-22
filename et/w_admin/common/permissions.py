@@ -6,4 +6,4 @@ u"""
 权限
 """
 
-perm_home='perm_home'
+perm_home = 'perm_home'

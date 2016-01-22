@@ -2,23 +2,22 @@
 # Date: 16-1-19
 # Author: 徐鹏程
 
-u'''
+u"""
     session基类
-'''
+"""
 
 import uuid
 
 from ...caching import LocalCache
+from .base_handler import BaseHandler
 
 cache = LocalCache()
 
-from .base_handler import BaseHandler
-
 
 class SessionHandler(BaseHandler):
-    u'''
+    u"""
         带session功能的Handler
-    '''
+    """
 
     def __init__(self, application, request, **kwargs):
         self.cache = cache
@@ -36,22 +35,34 @@ class SessionHandler(BaseHandler):
                 self.session_data = {}
 
     def set_session(self, key, value):
-        u'''
+        u"""
             设置session
-        '''
+
+            :param key: 键
+            :param value: 值
+
+            :type key: str
+            :type value:
+        """
         self.session_data[key] = value
         self._write_session_data()
 
     def get_session(self, key):
-        u'''
+        u"""
             获取session
-        '''
+
+            :param key: 键
+
+            :type key: str
+
+            :rtype:
+        """
         return self.session_data.get(key)
 
     def _write_session_data(self):
-        u'''
+        u"""
             记录session数据
-        '''
+        """
 
         if not self.session_key:
             self.session_key = str(uuid.uuid1())

@@ -8,24 +8,29 @@ from .cache_base import CacheBase
 
 
 class LocalCache(CacheBase):
-    u'''
+    u"""
         本地自定义缓存
-    '''
+    """
 
     def __init__(self):
         super(LocalCache, self).__init__(None, None)
 
     def set(self, key, val, expire_seconds=None, expire_days=None):
-        u'''
+        u"""
             写入缓存
-            参数：
-                key：键
-                val：值
-                expire_seconds：存活时间，单位--second
-                expire_days：存活时间，单位--day
+
+            :param key: 键
+            :param val: 值
+            :param expire_seconds: 存活时间，单位--second
+            :param expire_days: 存活时间，单位--day
+
+            :type key: str
+            :type val: object
+            :type expire_seconds: int
+            :type expire_days: int
 
             存货时间优先取expire_seconds，默认为0，即永久缓存
-        '''
+        """
         if expire_seconds:
             expires = expire_seconds
         elif expire_days:
@@ -36,12 +41,15 @@ class LocalCache(CacheBase):
         self._client[key] = (val, datetime.now() + timedelta(seconds=expires))
 
     def get(self, key):
-        u'''
+        u"""
             读取缓存
-            参数:
-                key：键
-            返回值：缓存的值
-        '''
+
+            :param key: 键
+
+            :type key: str
+
+            :return: 缓存的值
+        """
         val, expires = self._client.get(key, (None, None))
 
         if val is None:
@@ -55,4 +63,7 @@ class LocalCache(CacheBase):
         return val
 
     def _create_client(self):
+        u"""
+            创建缓存客户端
+        """
         return {}

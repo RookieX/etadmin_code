@@ -2,21 +2,27 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
-u'''
+u"""
     Model基类
-'''
+"""
 
 
 class ModelBase(object):
-    u'''
+    u"""
         Model基类，提供Model通用属性和方法
-    '''
+    """
 
     @classmethod
     def build_from_dict(cls, properties):
-        u'''
+        u"""
             利用字典对象构造Model
-        '''
+
+            :param properties: Model需要的属性
+            :type properties: dict
+
+            :rtype: ModelBase
+            :return: ModelBase
+        """
 
         obj = cls()
 

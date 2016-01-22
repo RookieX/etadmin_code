@@ -2,11 +2,9 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
-u'''
+u"""
     mysql数据库访问帮助类
-'''
-
-import functools
+"""
 
 import MySQLdb
 import MySQLdb.cursors
@@ -16,9 +14,9 @@ import config
 
 
 class MySqlDbConnBase(MySQLdb.connections.Connection):
-    u'''
+    u"""
         mysql connection基类
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
         super(MySqlDbConnBase, self).__init__(*args, **kwargs)
@@ -31,36 +29,50 @@ class MySqlDbConnBase(MySQLdb.connections.Connection):
 
 
 class ReadConnection(MySqlDbConnBase):
-    u'''
+    u"""
         只读库
-    '''
+    """
     pass
 
 
 class WriteConnection(MySqlDbConnBase):
-    u'''
+    u"""
         可写库
-    '''
+    """
 
 
 def open_read_db():
-    u'''
+    u"""
         打开只读库
-    '''
+
+        :rtype: ReadConnection
+        :return: 只读数据库链接
+    """
     return ReadConnection(**_read_db_config)
 
 
 def open_write_db():
-    u'''
+    u"""
         打开可写库
-    '''
+
+        :rtype: WriteConnection
+        :return: 可写数据库链接
+    """
     return WriteConnection(**_write_db_config)
 
 
 def query(sql, params=None):
-    u'''
+    u"""
         执行sql，返回数据库记录
-    '''
+
+        :param sql: sql语句
+        :param params: sql参数
+
+        :type sql: str
+        :type params: tuple
+
+        :rtype: tuple
+    """
     with open_read_db() as db:
         cursor = db.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(sql, params)
@@ -68,10 +80,18 @@ def query(sql, params=None):
 
 
 def query_one(sql, params=None):
-    u'''
+    u"""
         执行sql，只返回一条数据库记录。
         如果没有数据，返回None
-    '''
+
+        :param sql: sql语句
+        :param params: sql参数
+
+        :type sql: str
+        :type params: tuple
+
+        :rtype: dict
+    """
     with open_read_db() as db:
         cursor = db.cursor(MySQLdb.cursors.DictCursor)
         if cursor.execute(sql, params):
@@ -80,10 +100,16 @@ def query_one(sql, params=None):
 
 
 def query_scalar(sql, params=None):
-    u'''
+    u"""
         执行sql，返回第一行第一列的值。
         如果没有数据，返回None
-    '''
+
+        :param sql: sql语句
+        :param params: sql参数
+
+        :type sql: str
+        :type params: tuple
+    """
     with open_read_db() as db:
         cursor = db.cursor(MySQLdb.cursors.DictCursor)
         if cursor.execute(sql, params):
@@ -93,7 +119,19 @@ def query_scalar(sql, params=None):
         return None
 
 
-def execute_non_query(db, sql, params=None): pass
+def execute_non_query(sql, params=None):
+    u"""
+        执行sql，返回受影响行数。
+
+        :param sql: sql语句
+        :param params: sql参数
+
+        :type sql: str
+        :type params: tuple
+
+        :rtype: int
+        :return: 受影响行数
+    """
 
 
 # 只读库配置

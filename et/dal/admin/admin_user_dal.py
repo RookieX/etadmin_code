@@ -9,15 +9,18 @@ from ...model import AdminUser
 class AdminUserDAL(object):
     @staticmethod
     def login_exists(user_name, pwd):
-        u'''
+        u"""
         用登录信息判断用户是否存在
 
-        :param user_name:用户名
-        :param pwd:密码
+        :param user_name: 用户名
+        :param pwd: 密码
+
+        :type user_name: str
+        :type pwd: str
 
         :rtype: bool
-        :return:是否存在
-        '''
+        :return: 是否存在
+        """
 
         sql = u'''
             SELECT COUNT(*) FROM admin_user
@@ -30,13 +33,15 @@ class AdminUserDAL(object):
 
     @staticmethod
     def query_by_user_name(user_name):
-        u'''
+        u"""
         根据用户名查找用户信息
 
         :param user_name: 用户名
+        :type user_name: str
+
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
-        '''
+        """
 
         sql = u'''
                 SELECT  user_name,

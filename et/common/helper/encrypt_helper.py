@@ -2,15 +2,24 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
-u'''
+u"""
     加解密相关帮助方法
-'''
+"""
 
 import hashlib
 import hmac
 
 
 def password(plain):
+    u"""
+        对密码进行加密
+        :param plain:要加密的字符串
+
+        :type plain:str
+
+        :rtype: str
+        :return: 加密后的字符串
+    """
     if plain is None:
         return ''
 
