@@ -8,9 +8,9 @@ u'''
 
 import uuid
 
-from ...caching import local_cache
+from ...caching import LocalCache
 
-cache = local_cache.LocalCache()
+cache = LocalCache()
 
 from .base_handler import BaseHandler
 

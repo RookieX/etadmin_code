@@ -2,7 +2,7 @@
 # Date: 16-1-18
 # Author: 徐鹏程
 
-from et.common.routing import url_route
+from et.common.routing import route
 from et.common.helper import ajax_helper
 
 from et.bll.admin import AdminUserBLL
@@ -11,7 +11,7 @@ from et.w_admin.common.base import AdminHandlerBase
 from et.w_admin.common.helper import admin_helper
 
 
-@url_route.route(r'/login')
+@route(r'/login')
 class LoginHandler(AdminHandlerBase):
     def get(self):
         self.render('login.html')

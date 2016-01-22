@@ -7,7 +7,7 @@ u'''
 '''
 
 from et.common.extend.type_extend import dynamic
-from et.common.handler.session_handler import SessionHandler
+from et.common.handler import SessionHandler
 
 from et.w_admin.common.helper import admin_helper
 
