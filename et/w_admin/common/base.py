@@ -6,7 +6,6 @@ u"""
     后台相关基类
 """
 
-from et.common.extend.type_extend import dynamic
 from et.common.handler import SessionHandler
 
 from et.w_admin.common.helper import admin_helper
@@ -19,18 +18,6 @@ class AdminHandlerBase(SessionHandler):
 
     def __init__(self, *args, **kwargs):
         super(AdminHandlerBase, self).__init__(*args, **kwargs)
-
-        self.bag = dynamic()
-
-    def render(self, template_path):
-        u"""
-            覆盖父类的render，提供bag统一给template传参数
-
-            :param template_path: template路径
-
-            :type template_path: str
-        """
-        super(AdminHandlerBase, self).render(template_path, bag=self.bag)
 
     def check_auth(self, permission):
         u"""

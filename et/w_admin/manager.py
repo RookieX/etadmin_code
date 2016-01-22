@@ -16,10 +16,11 @@ import tornado.web
 import tornado.httpserver
 import tornado.ioloop
 
-from et.common.routing import url_route
+from et.common.routing import route, UIModule
 from et.common.helper import modules_importer
 
 modules_importer.import_modules('.', '^handlers_.*\.py$')  # 加载handler文件，以便构造url映射
+modules_importer.import_modules('.', '^__.*_ui\.py$')  # 加载handler文件，以便构造ui module映射
 
 
 class WebApp(tornado.web.Application):
@@ -37,7 +38,8 @@ def make_settings():
     return {
         'debug': True,
         'autoreload': True,
-        'handlers': url_route.route.routes(),
+        'handlers': route.routes(),
+        'ui_modules': UIModule.moules(),
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),
         'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
         'cookie_secret': '190qweasd$%^RTYFGH'

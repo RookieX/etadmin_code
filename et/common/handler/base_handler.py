@@ -8,11 +8,28 @@ u"""
 
 import tornado.web
 
+from ..extend.type_extend import dynamic
+
 
 class BaseHandler(tornado.web.RequestHandler):
     u"""
         所有HttpRequest的基类
     """
+
+    def __init__(self, *args, **kwargs):
+        super(BaseHandler, self).__init__(*args, **kwargs)
+
+        self.bag = dynamic()
+
+    def render(self, template_path):
+        u"""
+            覆盖父类的render，提供bag统一给template传参数
+
+            :param template_path: template路径
+
+            :type template_path: str
+        """
+        super(BaseHandler, self).render(template_path, bag=self.bag)
 
     def get_arguments_dict(self, names, required=False, default=None, strip=True):
         u"""

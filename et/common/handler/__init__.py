@@ -4,3 +4,4 @@
 
 from base_handler import BaseHandler
 from session_handler import SessionHandler
+from base_ui_module import UIModuleBase
