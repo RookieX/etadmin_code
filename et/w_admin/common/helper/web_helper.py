@@ -33,3 +33,30 @@ def get_login_session(handler):
         :return: session信息
     """
     return handler.get_session(config.login_session_key)
+
+
+def has_sub_menus(handler, menu_id):
+    u"""
+        判断某个菜单是否有子菜单
+
+        :param menu_id: 菜单id
+        :param handler: BaseHandler
+
+        :type menu_id: int
+        :type handler: BaseHandler
+
+        :rtype: bool
+
+        :return: 返回是否存在
+    """
+
+    user_info = get_login_session(handler)
+
+    if not user_info:
+        return False
+
+    for menu in user_info.menus:
+        if menu.parent.id == menu_id:
+            return True
+
+    return False

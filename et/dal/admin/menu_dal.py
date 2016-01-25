@@ -39,4 +39,12 @@ class MenuDAL(object):
 
         datas = mysql_helper.query(sql, args)
 
-        return [Menu.build_from_dict(data) for data in datas]
+        menus = []
+
+        for data in datas:
+            menu = Menu.build_from_dict(data)
+            menu.parent = Menu()
+            menu.parent.id = data['parent_id']
+
+            menus.append(menu)
+        return menus
