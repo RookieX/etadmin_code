@@ -42,6 +42,15 @@
                 <span class="menu-text"> 控制台 </span>
             </a>
         </li>
+        {% for menu in bag.menus %}
+        <li>
+            <a href="">
+                <i class="icon-desktop">
+                </i>
+                <span class="menu-text">{{menu.name}}</span>
+            </a>
+        </li>
+        {% end %}
     </ul>
     <!-- /.nav-list -->
 

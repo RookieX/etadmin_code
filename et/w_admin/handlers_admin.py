@@ -8,7 +8,7 @@ from et.common.helper import ajax_helper
 from et.bll.admin import AdminUserBLL
 
 from et.w_admin.common.base import AdminHandlerBase
-from et.w_admin.common.helper import admin_helper
+from et.w_admin.common.helper import web_helper
 
 
 @route(r'/login')
@@ -27,7 +27,7 @@ class LoginHandler(AdminHandlerBase):
 
         user = AdminUserBLL.query_full_by_user_name(args['user_name'])
 
-        admin_helper.set_login_session(self, user)
+        web_helper.set_login_session(self, user)
 
         from_url = self.get_argument('from_url', '/')
 

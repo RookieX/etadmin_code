@@ -8,7 +8,7 @@ u"""
 
 from et.common.handler import SessionHandler
 
-from et.w_admin.common.helper import admin_helper
+from et.w_admin.common.helper import web_helper
 
 
 class AdminHandlerBase(SessionHandler):
@@ -29,7 +29,7 @@ class AdminHandlerBase(SessionHandler):
             :rtype: bool
             :return: 检查结果
         """
-        user = admin_helper.get_login_session(self)
+        user = web_helper.get_login_session(self)
         if not user:
             return False
 
@@ -61,7 +61,7 @@ def authentication(permission, no_perm_callback, fail_callback):
 
     def _wrapper(func):
         def __wrapper(handler, *args, **kwargs):
-            user = admin_helper.get_login_session(handler)
+            user = web_helper.get_login_session(handler)
             if not user:
                 return fail_callback(handler, *args, **kwargs)
             if _check_auth(permission, user.permissions):
@@ -85,7 +85,7 @@ def login(non_callback):
 
     def _wrapper(func):
         def __wrapper(handler, *args, **kwargs):
-            user = admin_helper.get_login_session(handler)
+            user = web_helper.get_login_session(handler)
             if user:
                 return func(handler, *args, **kwargs)
             else:
