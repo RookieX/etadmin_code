@@ -15,7 +15,7 @@ class LeftMenuUIM(UIModuleBase):
             self.bag[k] = v
 
         self.bag.menu = menu
-        return self.render_string('__left_menu_item.html')
+        return self.render_string('ui_modules/__left_menu_item.html')
 
 
 @UIModule(r'SubMenu')
@@ -28,4 +28,4 @@ class SubMenuUIM(UIModuleBase):
 
         self.bag.menus = filter(lambda m: m.parent.id == pid, user_info.menus)
 
-        return self.render_string('__sub_menu_item.html')
+        return self.render_string('ui_modules/__sub_menu_item.html')

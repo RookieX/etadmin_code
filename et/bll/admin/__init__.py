@@ -5,3 +5,4 @@
 from .admin_user_bll import AdminUserBLL
 from .permission_bll import PermissionBLL
 from .department_bll import DepartmentBLL
+from .menu_bll import MenuBLL

@@ -13,4 +13,4 @@ class TopMenuItemUIM(UIModuleBase):
         self.bag.menu = menu
         for k, v in kwargs.items():
             self.bag[k] = v
-        return self.render_string('__top_menu_item.html')
+        return self.render_string('ui_modules/__top_menu_item.html')

@@ -31,6 +31,7 @@ class TopHandler(AdminHandlerBase):
 @route(r'/left')
 @route(r'/left/(\d*)')
 class LeftHandler(AdminHandlerBase):
+    @login(common_response.resp_need_login_regular)
     def get(self, pid=-1, **kwargs):
         user_info = web_helper.get_login_session(self)
 

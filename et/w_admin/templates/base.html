@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}易思汇后台管理系统{% end %}</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+    {% block header %}{% end %}
+</head>
+<body>
+
+<div class="place">
+    <span>当前位置：</span>
+    <ul class="placeul">
+        <li>{% block pos %}{% end %}</li>
+    </ul>
+</div>
+
+<div class="mainindex">
+    {% block main %}{% end %}
+</div>
+
+<script src="/static/js/jquery-2.2.0.js"></script>
+{% block footer %}{% end %}
+</body>
+</html>

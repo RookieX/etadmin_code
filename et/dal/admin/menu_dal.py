@@ -48,3 +48,25 @@ class MenuDAL(object):
 
             menus.append(menu)
         return menus
+
+    @staticmethod
+    def query_all():
+        u"""
+            查找所有菜单
+        """
+
+        sql = u'''
+            SELECT  id,
+                    `name`,
+                    display_name,
+                    description,
+                    `level`,
+                    parent_id,
+                    url,
+                    `order`
+            FROM menu
+        '''
+
+        datas = mysql_helper.query(sql)
+
+        return [Menu.build_from_dict(data) for data in datas]

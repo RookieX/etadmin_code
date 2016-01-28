@@ -1,0 +1,47 @@
+{% extends base.html %}
+{% block title %}菜单列表{% end %}
+{% block pos %}菜单列表{% end %}
+
+{% block main %}
+<div class="tools">
+
+    <ul class="toolbar">
+        <li class="click"><span><img src="/static/images/t01.png"/></span>添加</li>
+    </ul>
+
+</div>
+
+
+<table class="tablelist">
+    <thead>
+    <tr>
+        <th><input type="checkbox"/></th>
+        <th>ID</th>
+        <th>菜单名</th>
+        <th>显示名</th>
+        <th>描述</th>
+        <th>级别</th>
+        <th>父级菜单名</th>
+        <th>url</th>
+        <th>顺序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for menu in bag.menus %}
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td>{{ menu.id }}</td>
+        <td>{{ menu.name }}</td>
+        <td>{{ menu.display_name }}</td>
+        <td>{{ menu.description }}</td>
+        <td>{{ menu.level }}</td>
+        <td>{{ menu.parent.id }}</td>
+        <td>{{ menu.url }}</td>
+        <td>{{ menu.order }}</td>
+        <td><a href="#" class="tablelink">查看</a> <a href="#" class="tablelink"> 删除</a></td>
+    </tr>
+    {% end %}
+    </tbody>
+</table>
+{% end %}

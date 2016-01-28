@@ -6,6 +6,8 @@ u"""
     Model基类
 """
 
+from ..common.extend.type_extend import null
+
 
 class ModelBase(object):
     u"""
@@ -28,6 +30,6 @@ class ModelBase(object):
 
         for name, value in properties.items():
             if hasattr(obj, name):
-                setattr(obj, name, value)
+                setattr(obj, name, value if value is not None else null)
 
         return obj
