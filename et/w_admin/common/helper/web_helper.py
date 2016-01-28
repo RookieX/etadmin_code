@@ -35,6 +35,19 @@ def get_login_session(handler):
     return handler.get_session(config.login_session_key)
 
 
+def remove_login_session(handler):
+    u"""
+        移除用户登录的session信息
+        :param handler: BaseHandler
+
+        :type handler: BaseHandler
+    """
+
+    handler.remove_session()
+
+
+
+
 def has_sub_menus(handler, menu_id):
     u"""
         判断某个菜单是否有子菜单

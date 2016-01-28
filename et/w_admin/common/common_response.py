@@ -33,6 +33,7 @@ def resp_auth_fail_regular(handler):
 
         :type handler: BaseHandler
     """
+    handler.set_header('Content-Type', 'text/plain')
     handler.write(u'没有权限')
 
 

@@ -5,7 +5,7 @@
 from et.common.routing import route
 
 from et.w_admin.common import common_response, permissions
-from et.w_admin.common.base import AdminHandlerBase, authentication
+from et.w_admin.common.base import AdminHandlerBase, authentication, login
 from et.w_admin.common.helper import web_helper
 import config
 
@@ -22,8 +22,8 @@ class IndexHandler(AdminHandlerBase):
 class TopHandler(AdminHandlerBase):
     def get(self):
         user_info = web_helper.get_login_session(self)
-        if user_info:
-            self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
+
+        self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
 
         self.render('top.html')
 
@@ -32,15 +32,21 @@ class TopHandler(AdminHandlerBase):
 @route(r'/left/(\d*)')
 class LeftHandler(AdminHandlerBase):
     def get(self, pid=-1, **kwargs):
+        user_info = web_helper.get_login_session(self)
 
         if pid == -1:
-            # 没有父菜单ID，默认取部门默认父菜单
-            pass
+            pid = user_info.department.default_top_menu.id
         else:
             pid = int(pid)
 
-        user_info = web_helper.get_login_session(self)
-        if user_info:
-            self.bag.menus = filter(lambda m: m.level == config.primary_menu_level and m.parent.id == pid,
-                                    user_info.menus)
+        self.bag.menus = filter(lambda m: m.level == config.primary_menu_level and m.parent.id == pid,
+                                user_info.menus)
         self.render('left.html')
+
+
+@route(r'/logout')
+class LogoutHandler(AdminHandlerBase):
+    def get(self):
+        web_helper.remove_login_session(self)
+
+        self.redirect('/login')

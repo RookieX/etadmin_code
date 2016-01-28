@@ -21,8 +21,8 @@ class SessionHandler(BaseHandler):
 
     def __init__(self, application, request, **kwargs):
         self.cache = cache
-        self.session_name = kwargs.get('session_name', 'SESSION')
-        self.session_key = None
+        self.session_name = kwargs.get('session_name', 'SESSION')  # SESSION记录cookie的名称
+        self.session_key = None  # cookie中记录的SESSION的key
         self.session_data = {}
         super(SessionHandler, self).__init__(application, request, **kwargs)
 
@@ -58,6 +58,12 @@ class SessionHandler(BaseHandler):
             :rtype:
         """
         return self.session_data.get(key)
+
+    def remove_session(self):
+        u"""
+            移除session
+        """
+        self.cache.remove(self.session_key)
 
     def _write_session_data(self):
         u"""

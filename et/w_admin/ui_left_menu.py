@@ -25,6 +25,7 @@ class SubMenuUIM(UIModuleBase):
             self.bag[k] = v
 
         user_info = web_helper.get_login_session(self.handler)
-        if user_info:
-            self.bag.menus = filter(lambda m: m.parent.id == pid, user_info.menus)
+
+        self.bag.menus = filter(lambda m: m.parent.id == pid, user_info.menus)
+
         return self.render_string('__sub_menu_item.html')

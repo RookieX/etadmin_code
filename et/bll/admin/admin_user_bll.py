@@ -9,6 +9,7 @@ from ...caching.local_cache import LocalCache
 from ...dal.admin import AdminUserDAL
 from ...dal.admin import PermissionDAL
 from ...dal.admin import MenuDAL
+from ...dal.admin import DepartmentDAL
 
 import config
 
@@ -52,6 +53,7 @@ class AdminUserBLL(object):
             user = AdminUserDAL.query_by_user_name(user_name)
             user.permissions = PermissionDAL.query_by_user_name(user_name)
             user.menus = MenuDAL.query_by_user_name(user_name)
+            user.department = DepartmentDAL.query_by_user_name(user_name)
             if user:
                 cache.set(cache_key, user, expire_seconds=config.default_cache_seconds)
 
