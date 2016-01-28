@@ -1,0 +1,10 @@
+<dd>
+    <div class="title">
+        {% if bag.menu.url %}
+        <a href="{{ bag.menu.url }}" target="rightFrame"><img src="/static/images/leftico01.png"/>{{ bag.menu.display_name }}</a>
+        {% else %}
+        <span><img src="/static/images/leftico01.png"/></span>{{ bag.menu.display_name }}
+        {% end %}
+    </div>
+    {% module SubMenu(bag.menu.id) %}
+</dd>

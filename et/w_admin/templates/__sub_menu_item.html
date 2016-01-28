@@ -1,0 +1,8 @@
+{% if bag.menus %}
+
+<ul class="menuson">
+    {% for menu in bag.menus %}
+    <li><cite></cite><a href="{{ menu.url }}" target="rightFrame">{{ menu.display_name }}</a><i></i></li>
+    {% end %}
+</ul>
+{% end %}

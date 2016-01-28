@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>欢迎登录后台管理系统</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body style="background-color:#1c77ac; background-image:url(/static/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+
+
+<div id="mainBody">
+    <div id="cloud1" class="cloud"></div>
+    <div id="cloud2" class="cloud"></div>
+</div>
+
+
+<div class="logintop">
+    <span>欢迎登录后台管理界面平台</span>
+</div>
+
+<div class="loginbody">
+
+    <span class="systemlogo"></span>
+
+    <div class="loginbox">
+        <form id="login_form" method="post">
+            <ul>
+                <li><input name="user_name" type="text" class="loginuser"/></li>
+                <li><input name="password" type="password" class="loginpwd"/></li>
+                <li><input type="submit" class="loginbtn" value="登录"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+</div>
+
+<script src="/static/js/jquery-2.2.0.js"></script>
+<script src="/static/js/jquery.form.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+
+<script language="javascript">
+    $(function () {
+        $('.loginbox').css({'position': 'absolute', 'left': ($(window).width() - 692) / 2});
+        $(window).resize(function () {
+            $('.loginbox').css({'position': 'absolute', 'left': ($(window).width() - 692) / 2});
+        });
+
+        $('#login_form').validate({
+            rules: {
+                user_name: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                user_name: {
+                    required: '请输入用户名'
+                },
+                password: {
+                    required: '请输入密码'
+                }
+            },
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    success: function (resp) {
+                        if (resp.status === 0) {
+                            var redirect_url = resp.data.redirect ? resp.data.redirect : '/';
+                            window.location.href = redirect_url;
+                        } else {
+                            alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        alert('登录请求失败，请联系技术部！')
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
