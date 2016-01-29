@@ -13,11 +13,12 @@ class __UrlRoute(object):
     """
     __routes = {}
 
-    def __init__(self, url_pattern):
-        self.pattern = url_pattern
+    def __init__(self, *args):
+        self.patterns = args
 
     def __call__(self, request):
-        self.__routes[self.pattern] = request
+        for pattern in self.patterns:
+            self.__routes[pattern] = request
         return request
 
     @classmethod
