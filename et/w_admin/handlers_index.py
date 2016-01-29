@@ -24,6 +24,7 @@ class TopHandler(AdminHandlerBase):
         user_info = web_helper.get_login_session(self)
 
         self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
+        self.bag.display_name = user_info.display_name
 
         self.render('top.html')
 
