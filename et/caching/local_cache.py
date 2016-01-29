@@ -2,6 +2,7 @@
 # Date: 16-1-19
 # Author: 徐鹏程
 
+import threading
 from datetime import datetime, timedelta
 
 from .cache_base import CacheBase
@@ -9,8 +10,17 @@ from .cache_base import CacheBase
 
 class LocalCache(CacheBase):
     u"""
-        本地自定义缓存
+        本地自定义缓存，单例实现
     """
+    __mutex = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, '_instance'):
+            cls.__mutex.acquire()
+            if not hasattr(cls, '_instance'):
+                cls._instance = super(LocalCache, cls).__new__(cls, *args, **kwargs)
+            cls.__mutex.release()
+        return cls._instance
 
     def __init__(self):
         super(LocalCache, self).__init__(None, None)
@@ -36,7 +46,7 @@ class LocalCache(CacheBase):
         elif expire_days:
             expires = expire_days * 24 * 60 * 60
         else:
-            expires = 0
+            expires = 10000000
 
         self._client[key] = (val, datetime.now() + timedelta(seconds=expires))
 

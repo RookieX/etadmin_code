@@ -32,11 +32,11 @@
     <tr>
         <td><input type="checkbox"/></td>
         <td>{{ menu.id }}</td>
-        <td>{{ menu.name }}</td>
-        <td>{{ menu.display_name }}</td>
+        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.name }}</a>{% else %}{{ menu.name }}{% end %}</td>
+        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.display_name }}</a>{% else %}{{ menu.display_name }}{% end %}</a></td>
         <td>{{ menu.description }}</td>
         <td>{{ menu.level }}</td>
-        <td>{{ menu.parent.id }}</td>
+        <td>{{ menu.parent.name }}</td>
         <td>{{ menu.url }}</td>
         <td>{{ menu.order }}</td>
         <td><a href="#" class="tablelink">查看</a> <a href="#" class="tablelink"> 删除</a></td>

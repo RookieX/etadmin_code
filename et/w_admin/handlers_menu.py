@@ -9,9 +9,10 @@ from et.bll.admin import MenuBLL
 from et.w_admin.common.base import AdminHandlerBase
 
 
-@route(r'/menu_list')
+@route(r'/menu_list', r'/menu_list/(\d*)')
 class MenuListHandler(AdminHandlerBase):
-    def get(self):
-        self.bag.menus = MenuBLL.query_all()
+    def get(self, parent_id=0):
+        parent_id = int(parent_id)
+        self.bag.menus = MenuBLL.query_by_parent_id(parent_id)
 
         self.render('menu_list.html')

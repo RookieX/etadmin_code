@@ -6,4 +6,4 @@
 cache_prefix = 'w_admin'
 
 # 默认缓存时间
-default_cache_seconds = 60
+default_cache_seconds = 1200

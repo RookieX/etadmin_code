@@ -47,7 +47,7 @@ class AdminUserBLL(object):
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
         """
-        cache_key = build_cache_key(config.cache_prefix)
+        cache_key = build_cache_key(config.cache_prefix, user_name)
         user = cache.get(cache_key)
         if not user:
             user = AdminUserDAL.query_by_user_name(user_name)

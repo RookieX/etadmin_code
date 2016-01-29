@@ -14,6 +14,7 @@ class Menu(ModelBase):
         self.__description = null
         self.__level = null
         self.__parent = null
+        self.__sub_menus = set()
         self.__url = null
         self.__order = null
 
@@ -64,6 +65,14 @@ class Menu(ModelBase):
     @parent.setter
     def parent(self, value):
         self.__parent = value
+
+    @property
+    def sub_menus(self):
+        return self.__sub_menus
+
+    @sub_menus.setter
+    def sub_menus(self, value):
+        self.__sub_menus = value
 
     @property
     def url(self):
