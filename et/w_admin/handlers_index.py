@@ -25,6 +25,7 @@ class TopHandler(AdminHandlerBase):
 
         # 加载顶级菜单
         self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
+        self.bag.menus.sort(key=lambda m: m.order)
         self.bag.display_name = user_info.display_name
 
         self.render('top.html')
