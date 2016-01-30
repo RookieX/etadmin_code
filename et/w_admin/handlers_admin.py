@@ -25,10 +25,12 @@ class LoginHandler(AdminHandlerBase):
         if not AdminUserBLL.login(**args):
             return ajax_helper.write_json(self, -2, u'用户名或密码错误')
 
+        # 读取用户详细信息，写入session
         user = AdminUserBLL.query_full_by_user_name(args['user_name'])
 
         web_helper.set_login_session(self, user)
 
+        # 返回来源页面
         from_url = self.get_argument('from_url', '/')
 
         ajax_helper.write_json(self, 0, data={'redirect': from_url})
