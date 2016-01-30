@@ -1,12 +1,7 @@
 ﻿@charset "utf-8";
-/* CSS Document */
-/***
- * uimaker
- * http://www.uimaker.com
- * e-mail: w_admin@uimaker.com
- */
+
 * {
-    font-size: 9pt;
+    font-size: 12px;
     border: 0;
     margin: 0;
     padding: 0;
@@ -427,7 +422,6 @@ h2 {
     display: none;
 }
 
-
 .menuson {
     line-height: 30px;
     font-weight: normal;
@@ -532,13 +526,25 @@ h2 {
     padding-right: 10px;
     margin-right: 5px;
     border-radius: 3px;
-    behavior: url(js/pie.htc);
+    behavior: url(/static/js/pie.htc);
     cursor: pointer;
 }
 
 .toolbar li span {
     float: left;
     margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.toolbar li a {
+    float: left;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.toolbar li a img {
+    float:left;
     margin-right: 5px;
     margin-top: 5px;
 }

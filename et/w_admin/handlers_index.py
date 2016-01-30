@@ -2,6 +2,8 @@
 # Date: 16-1-21
 # Author: 徐鹏程
 
+import operator
+
 from et.common.routing import route
 
 from et.w_admin.common import common_response, permissions
@@ -25,7 +27,7 @@ class TopHandler(AdminHandlerBase):
 
         # 加载顶级菜单
         self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
-        self.bag.menus.sort(key=lambda m: m.order)
+        self.bag.menus.sort(key=operator.attrgetter('order'))
         self.bag.display_name = user_info.display_name
 
         self.render('top.html')

@@ -7,6 +7,9 @@
 
     <ul class="toolbar">
         <li class="click"><span><img src="/static/images/t01.png"/></span>添加</li>
+        {% if bag.back_url %}
+        <li><a href="{{bag.back_url}}"><img src="/static/images/t01.png"/>返回上一级</a></li>
+        {% end %}
     </ul>
 
 </div>
@@ -32,8 +35,11 @@
     <tr>
         <td><input type="checkbox"/></td>
         <td>{{ menu.id }}</td>
-        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.name }}</a>{% else %}{{ menu.name }}{% end %}</td>
-        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.display_name }}</a>{% else %}{{ menu.display_name }}{% end %}</a></td>
+        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.name }}</a>{% else %}{{ menu.name }}{% end
+            %}
+        </td>
+        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.display_name }}</a>{% else %}{{
+            menu.display_name }}{% end %}</a></td>
         <td>{{ menu.description }}</td>
         <td>{{ menu.level }}</td>
         <td>{{ menu.parent.name }}</td>
