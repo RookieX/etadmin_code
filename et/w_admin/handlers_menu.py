@@ -13,8 +13,9 @@ from et.w_admin.common.base import AdminHandlerBase
 
 @route(r'/menu_list', r'/menu_list/(\d*)')
 class MenuListHandler(AdminHandlerBase):
-    def get(self, parent_id=0):
+    def get(self, parent_id=0, page_index=1):
         parent_id = int(parent_id)
+        page_index = int(page_index)
 
         self.bag.menus = MenuBLL.query_by_parent_id(parent_id)
 

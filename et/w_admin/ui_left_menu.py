@@ -11,8 +11,7 @@ import config
 @UIModule(r'LeftMenu')
 class LeftMenuUIM(UIModuleBase):
     def render(self, menu, **kwargs):
-        for k, v in kwargs.items():
-            self.bag[k] = v
+        super(LeftMenuUIM, self).render(menu, **kwargs)
 
         self.bag.menu = menu
         return self.render_string('ui_modules/__left_menu_item.html')
@@ -21,8 +20,7 @@ class LeftMenuUIM(UIModuleBase):
 @UIModule(r'SubMenu')
 class SubMenuUIM(UIModuleBase):
     def render(self, pid, **kwargs):
-        for k, v in kwargs.items():
-            self.bag[k] = v
+        super(SubMenuUIM, self).render(**kwargs)
 
         user_info = web_helper.get_login_session(self.handler)
 

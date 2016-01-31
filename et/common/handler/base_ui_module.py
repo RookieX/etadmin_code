@@ -15,6 +15,10 @@ class UIModuleBase(tornado.web.UIModule):
         super(UIModuleBase, self).__init__(*args, **kwargs)
         self.bag = dynamic()
 
+    def render(self, *args, **kwargs):
+        for k, v in kwargs.items():
+            self.bag[k] = v
+
     def render_string(self, template_path, **kwargs):
         u"""
             覆盖父类的render_string，提供bag统一给template传参数
