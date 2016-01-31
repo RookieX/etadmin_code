@@ -51,6 +51,25 @@ class MenuBLL(object):
 
         return menus
 
+    @classmethod
+    def query_by_id(cls, menu_id):
+        u"""
+            根据id查询菜单
+
+            :param menu_id: 菜单id
+
+            :type menu_id: long
+
+            :rtype: Menu
+            :return: id对应的菜单
+        """
+
+        menus = filter(lambda m: m.id == menu_id, cls.query_all())
+        if menus:
+            return menus[0]
+
+        return None
+
 
 def _build_menu_hierarchy(menus):
     u"""

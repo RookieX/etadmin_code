@@ -1,0 +1,58 @@
+{% extends base.html %}
+
+{% block pos %}
+编辑菜单
+{% end %}
+
+{% block main%}
+<div class="formbody">
+
+    <div class="formtitle"><span>菜单编辑</span></div>
+
+    <ul class="forminfo">
+        <li>
+            <label>菜单名</label>
+            <input name="name" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>显示名</label>
+            <input name="display_name" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>描述</label>
+            <input name="description" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>级别</label>
+            <input name="level" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>父菜单</label>
+            <div class="dropdown">
+                <button class="btn">请选择<span class="triangle"></span></button>
+                <ul>
+                    <li>item1</li>
+                    <li>item2</li>
+                    <li>item3</li>
+                    <li>item4</li>
+                    <li>item5</li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <label>url</label>
+            <input name="url" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>排序</label>
+            <input name="order" type="text" class="dfinput"/>
+        </li>
+        <li>
+            <label>&nbsp;</label>
+            <input name="" type="button" class="btn" value="确认保存"/>
+        </li>
+    </ul>
+
+
+</div>
+{% end %}

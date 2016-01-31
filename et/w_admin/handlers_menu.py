@@ -27,3 +27,11 @@ class MenuListHandler(AdminHandlerBase):
             self.bag.back_url = '%s/%d' % (actual_path, self.bag.menus[0].parent.parent.id)
 
         self.render('menu_list.html')
+
+
+@route(r'/menu_edit', r'/menu_edit/(\d+)')
+class MenuEditHandler(AdminHandlerBase):
+    def get(self, menu_id=0):
+        self.bag.menu = MenuBLL.query_by_id(menu_id)
+
+        self.render('menu_edit.html')

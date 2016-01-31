@@ -16,5 +16,16 @@
 })(window.jQuery);
 
 $(function () {
+    $(document).click(function () {
+        $('.dropdown ul').slideUp('fast');
+    });
+
     $('.tablelist thead :checkbox').chkCheckAll($('.tablelist tbody :checkbox'));
+
+    $('.dropdown ul').hide();
+    $('.dropdown .btn').click(function (e) {
+        var self = $(this);
+        $(this).parent().children('ul').slideToggle('fast');
+        e.stopPropagation();
+    });
 });

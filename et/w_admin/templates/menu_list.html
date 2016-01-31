@@ -45,7 +45,9 @@
         <td>{{ menu.parent.name }}</td>
         <td>{{ menu.url }}</td>
         <td>{{ menu.order }}</td>
-        <td><a href="#" class="tablelink">查看</a> <a href="#" class="tablelink"> 删除</a></td>
+        <td>
+            <a href="/menu_edit/{{ menu.id }}" class="tablelink">编辑</a>
+        </td>
     </tr>
     {% end %}
     </tbody>
