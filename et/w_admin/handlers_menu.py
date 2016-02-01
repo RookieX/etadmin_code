@@ -54,10 +54,8 @@ class LoadMenusHandler(AdminHandlerBase):
     def get(self):
         level = self.get_argument('level', '')
 
-        re_pattern = r'^-?\d+$'
-
-        if not re.match(re_pattern, level):
-            return ajax_helper.write_json(self, -1, u'请先输入正确的level')
+        if not level.isdigit():
+            return ajax_helper.write_json(self, -1, u'请先输入level')
 
         level = int(level)
 
