@@ -5,57 +5,94 @@
 {% end %}
 
 {% block main%}
-<div class="formbody">
+<form method="post">
+    <div class="formbody">
 
-    <div class="formtitle"><span>菜单编辑</span></div>
+        <div class="formtitle"><span>菜单编辑</span></div>
 
-    <ul class="forminfo">
-        <li>
-            <label>菜单名</label>
-            <input name="name" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>显示名</label>
-            <input name="display_name" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>描述</label>
-            <input name="description" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>级别</label>
-            <input name="level" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>父菜单</label>
-            <div class="dropdown">
-                <button class="dropdown-btn">
-                    <span class="dropdown-text">请选择</span>
-                    <span class="triangle"></span>
-                </button>
-                <ul>
-                    <li value="1">选项1</li>
-                    <li value="2" item-selected>选项2</li>
-                    <li value="3">选项3</li>
-                    <li value="4">选项4</li>
-                    <li value="5">选项5</li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            <label>url</label>
-            <input name="url" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>排序</label>
-            <input name="order" type="text" class="dfinput"/>
-        </li>
-        <li>
-            <label>&nbsp;</label>
-            <input name="" type="button" class="btn" value="确认保存"/>
-        </li>
-    </ul>
-
-
+        <ul class="forminfo">
+            <li>
+                <label>菜单名</label>
+                <input name="name" type="text" class="dfinput" value="{{ bag.menu.name }}"/>
+            </li>
+            <li>
+                <label>显示名</label>
+                <input name="display_name" type="text" class="dfinput" value="{{ bag.menu.display_name }}"/>
+            </li>
+            <li>
+                <label>描述</label>
+                <input name="description" type="text" class="dfinput" value="{{ bag.menu.description }}"/>
+            </li>
+            <li>
+                <label>级别</label>
+                <input name="level" type="text" class="dfinput" value="{{ bag.menu.level }}"/>
+            </li>
+            <li>
+                <label>父菜单</label>
+                <div id="parent_menus" class="dropdown">
+                    <button type="button" class="dropdown-btn">
+                        <span class="dropdown-text">请选择</span>
+                        <span class="triangle"></span>
+                    </button>
+                    <ul>
+                        {% for pm in bag.parent_menus %}
+                        <li value="{{ pm.id }}">{{ pm.display_name }}</li>
+                        {% end %}
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <label>url</label>
+                <input name="url" type="text" class="dfinput" value="{{ bag.menu.url }}"/>
+            </li>
+            <li>
+                <label>排序</label>
+                <input name="order" type="text" class="dfinput" value="{{ bag.menu.order }}"/>
+            </li>
+            <li>
+                <label>&nbsp;</label>
+                <input type="submit" class="btn" value="确认保存"/>
+            </li>
+        </ul>
+    </div>
+</form>
 </div>
+{% end %}
+
+{% block footer %}
+<script type="text/javascript">
+    $(function () {
+        $('input[name=level]').blur(function () {
+            var self = $(this);
+            var ddl = $('#parent_menus');
+            var level = self.val();
+            level = parseInt(level) - 1;
+            $.ajax({
+                url: '/load_menus',
+                type: 'GET',
+                data: {
+                    level: level
+                },
+                success: function (resp) {
+                    if (resp.status === 0) {
+                        var ddlContainer = ddl.find('ul');
+                        ddlContainer.empty();
+                        $.each(resp.data, function (index, item) {
+                            $('<li>')
+                                    .text(item.display_name)
+                                    .val(item.id).appendTo(ddlContainer);
+                        });
+                        initDropdownList(ddl);
+                    } else {
+                        alert(resp.msg);
+                    }
+                },
+                error: function () {
+                    alert('加载菜单出错');
+                }
+            });
+        });
+    });
+
+</script>
 {% end %}

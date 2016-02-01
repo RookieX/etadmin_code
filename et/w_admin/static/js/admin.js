@@ -15,56 +15,73 @@
     });
 })(window.jQuery);
 
+
+//显示下拉框
+function showDropdownList(ddl) {
+    ddl = $(ddl);
+    ddl.children('ul').slideDown('fast');
+}
+
+//隐藏下拉框
+function hideDropdownList(ddl) {
+    ddl = $(ddl);
+    ddl.children('ul').slideUp('fast');
+}
+
+//显示/隐藏下拉框
+function tolggleDropdownList(ddl) {
+    ddl = $(ddl);
+    ddl.children('ul').slideToggle('fast');
+}
+
+//初始化下拉框
+function initDropdownList(ddl) {
+    ddl = $(ddl);
+
+
+    ddl.find('li').bind('click', selectedDropdownItem);
+
+    var selected = ddl.find('ul li[item-selected]');
+    if (selected.length > 0) {
+        setDropdownListValue(ddl, selected);
+    }
+}
+
+//选中值
+function selectedDropdownItem() {
+    var self = $(this);
+
+    var dropdown = self.parent().parent();
+
+    setDropdownListValue(dropdown, self);
+
+    hideDropdownList(dropdown);
+
+}
+
+//设置下拉框的选中值
+function setDropdownListValue(ddl, li) {
+    ddl = $(ddl);
+    li = $(li);
+
+    var btn = ddl.children('.dropdown-btn');
+    var txt = btn.find('.dropdown-text');
+
+    btn.val(li.val());
+    txt.text(li.text());
+
+    li.attr('item-selected', 'true').siblings().removeAttr('item-selected');
+}
 $(function () {
 
-    //显示下拉框
-    function showDropdownList(ddl) {
-        ddl.children('ul').slideDown('fast');
-    }
-
-    //隐藏下拉框
-    function hideDropdownList(ddl) {
-        ddl.children('ul').slideUp('fast');
-    }
-
-    //显示/隐藏下拉框
-    function tolggleDropdownList(ddl) {
-        ddl.children('ul').slideToggle('fast');
-    }
-
-    //设置下拉框的选中值
-    function setDropdownListValue(ddl, li) {
-        var btn = ddl.children('.dropdown-btn');
-        var txt = btn.find('.dropdown-text');
-
-        btn.val(li.val());
-        txt.text(li.text());
-
-        li.attr('item-selected','true').siblings().removeAttr('item-selected');
-    }
-
     $('.dropdown').each(function (index, item) {
-        var self = $(item);
-        var selected = self.find('ul li[item-selected]');
-        if (selected.length > 0) {
-            setDropdownListValue(self, selected);
-        }
+        initDropdownList(item);
     });
 
     $('.dropdown .dropdown-btn').click(function (e) {
         var self = $(this);
         tolggleDropdownList($(this).parent());
         e.stopPropagation();
-    });
-
-    $('.dropdown ul li').click(function () {
-        var self = $(this);
-
-        var dropdown = self.parent().parent();
-
-        setDropdownListValue(dropdown, self);
-
-        hideDropdownList(dropdown);
     });
 
     $(document).click(function () {

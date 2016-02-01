@@ -70,6 +70,21 @@ class MenuBLL(object):
 
         return None
 
+    @classmethod
+    def query_by_level(cls, level):
+        u"""
+            根据level查询菜单
+
+            :param level: 菜单level
+
+            :type level: int
+
+            :rtype: list[Menu]
+            :return: level对应的菜单
+        """
+        menus = filter(lambda m: m.level == level, cls.query_all())
+        return menus
+
 
 def _build_menu_hierarchy(menus):
     u"""

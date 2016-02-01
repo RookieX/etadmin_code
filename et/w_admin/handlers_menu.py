@@ -5,6 +5,8 @@
 import re
 
 from et.common.routing import route
+from et.common.extend.type_extend import null
+from et.common.helper import ajax_helper
 
 from et.bll.admin import MenuBLL
 
@@ -32,6 +34,31 @@ class MenuListHandler(AdminHandlerBase):
 @route(r'/menu_edit', r'/menu_edit/(\d+)')
 class MenuEditHandler(AdminHandlerBase):
     def get(self, menu_id=0):
+        menu_id = int(menu_id)
+
+        self.bag.menu = null
+        self.bag.parent_menus = null
+
         self.bag.menu = MenuBLL.query_by_id(menu_id)
 
+        if not self.bag.menu:
+            self.bag.menu = null
+        else:
+            self.bag.parent_menus = MenuBLL.query_by_level(self.bag.menu.level - 1)
+
         self.render('menu_edit.html')
+
+
+@route(r'/load_menus')
+class LoadMenusHandler(AdminHandlerBase):
+    def get(self):
+        level = self.get_argument('level', '')
+
+        if not level.isdigit():
+            return ajax_helper.write_json(self, -1, u'请先输入level')
+
+        level = int(level)
+
+        menus = MenuBLL.query_by_level(level)
+
+        ajax_helper.write_json(self, 0, data=[menu.to_dict() for menu in menus])
