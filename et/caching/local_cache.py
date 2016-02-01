@@ -46,9 +46,13 @@ class LocalCache(CacheBase):
         elif expire_days:
             expires = expire_days * 24 * 60 * 60
         else:
-            expires = 10000000
+            expires = None
+        if expires:
+            expire_time = datetime.now() + timedelta(seconds=expires)
+        else:
+            expire_time = 0
 
-        self._client[key] = (val, datetime.now() + timedelta(seconds=expires))
+        self._client[key] = (val, expire_time)
 
     def get(self, key):
         u"""
@@ -63,6 +67,9 @@ class LocalCache(CacheBase):
         val, expires = self._client.get(key, (None, None))
 
         if val is None:
+            return val
+
+        if 0 == expires:
             return val
 
         # 过期处理
