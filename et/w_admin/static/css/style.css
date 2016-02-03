@@ -1585,55 +1585,11 @@ h2 {
     behavior: url(/static/js/pie.htc);
 }
 
-.dropdown {
-    width: 150px;
-    display: inline-block;
+input.valid-error {
+    border: 1px solid red;
 }
 
-.dropdown .dropdown-btn {
-    position: relative;
-    width: 100%;
-    display: block;
-    background-color: #fff;
-    height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.dropdown .dropdown-btn:hover {
-    background-color: #eee;
-}
-
-.dropdown ul {
-    display: none;
-    position: absolute;
-    z-index: 10;
-    list-style-type: none;
-    padding: 0 20px 0;
-    margin: 1px 0 0 0;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    background-color: #fff;
-    box-sizing: border-box;
-}
-
-.dropdown ul li {
-    padding: 3px 0 3px;
-    cursor: pointer;
-}
-
-.dropdown ul li[item-selected] {
-    font-weight: bold;
-}
-
-span.triangle:after {
-    content: '';
-    height: 0;
-    width: 0;
-    border: 5px solid transparent;
-    border-top: 5px solid #000;
-    position: absolute;
-    top: 40%;
-    right: 10%;
+p.valid-error {
+    margin-left: 85px;
+    color: red;
 }

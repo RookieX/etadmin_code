@@ -2,7 +2,8 @@
 # Date: 16-1-28
 # Author: 徐鹏程
 
-from ...common.extend.type_extend import null
+from datetime import datetime
+
 from ...dal.admin import MenuDAL
 from ...model import Menu
 from ...caching import LocalCache, build_cache_key
@@ -84,6 +85,22 @@ class MenuBLL(object):
         """
         menus = filter(lambda m: m.level == level, cls.query_all())
         return menus
+
+    @staticmethod
+    def update(menu):
+        u"""
+            更新菜单
+
+            :param menu: 要更新的菜单
+            :type menu: Menu
+
+            :rtype: long
+            :return: 受影响行数
+        """
+
+        menu.update_datetime = datetime.now()
+        menu.parent.id = int(menu.parent.id) if menu.parent.id else 0
+        return MenuDAL.update(menu)
 
 
 def _build_menu_hierarchy(menus):

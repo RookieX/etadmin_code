@@ -17,6 +17,8 @@ class Menu(ModelBase):
         self.__sub_menus = set()
         self.__url = null
         self.__order = null
+        self.__create_datetime = null
+        self.__update_datetime = null
 
     @property
     def id(self):
@@ -89,3 +91,19 @@ class Menu(ModelBase):
     @order.setter
     def order(self, value):
         self.__order = value
+
+    @property
+    def create_datetime(self):
+        return self.__create_datetime
+
+    @create_datetime.setter
+    def create_datetime(self, value):
+        self.__create_datetime = value
+
+    @property
+    def update_datetime(self):
+        return self.__update_datetime
+
+    @update_datetime.setter
+    def update_datetime(self, value):
+        self.__update_datetime = value

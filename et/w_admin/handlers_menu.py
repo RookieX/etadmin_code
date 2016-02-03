@@ -9,6 +9,7 @@ from et.common.extend.type_extend import null
 from et.common.helper import ajax_helper
 
 from et.bll.admin import MenuBLL
+from et.model import Menu
 
 from et.w_admin.common.base import AdminHandlerBase
 
@@ -47,6 +48,50 @@ class MenuEditHandler(AdminHandlerBase):
             self.bag.parent_menus = MenuBLL.query_by_level(self.bag.menu.level - 1)
 
         self.render('menu_edit.html')
+
+    def post(self, menu_id):
+        arguments = self.get_arguments_dict(
+            ['name',
+             'display_name',
+             'description',
+             'level',
+             'parent_menu',
+             'url',
+             'order'])
+
+        arguments['id'] = menu_id
+
+        if not arguments['name']:
+            return ajax_helper.write_json(self, -1, u'请输入菜单名')
+
+        if not arguments['display_name']:
+            return ajax_helper.write_json(self, -2, u'请输入显示名')
+
+        if not arguments['level']:
+            return ajax_helper.write_json(self, -3, u'请输入级别')
+
+        if arguments['level'] != '0' and not arguments['parent_menu']:
+            return ajax_helper.write_json(self, -4, u'请选择父菜单')
+
+        if not arguments['order']:
+            return ajax_helper.write_json(self, -5, u'请输入排序')
+
+        self.arguments = arguments
+        if not menu_id:
+            self.add_menu()
+        else:
+            self.update_menu()
+
+    def add_menu(self):
+        pass
+
+    def update_menu(self):
+        arguments = self.arguments
+        menu = Menu.build_from_dict(arguments)
+        menu.parent = Menu.build_from_dict({'id': arguments['parent_menu']})
+
+        if MenuBLL.update(menu) == 1:
+            return ajax_helper.write_json(self, 0)
 
 
 @route(r'/load_menus')

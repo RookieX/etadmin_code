@@ -92,6 +92,41 @@ class MenuDAL(object):
 
         return [_build_menu_item(data) for data in datas]
 
+    @staticmethod
+    def update(menu):
+        u"""
+            更新菜单
+
+            :param menu: 要更新的菜单
+            :type menu: Menu
+
+            :rtype: long
+            :return: 受影响行数
+        """
+        sql = u'''
+            UPDATE menu
+            SET `name` = %s,
+                display_name = %s,
+                description = %s,
+                `level` = %s,
+                parent_id = %s,
+                url = %s,
+                `order` = %s,
+                update_datetime = %s
+            WHERE id = %s
+        '''
+        args = (menu.name,
+                menu.display_name,
+                menu.description,
+                menu.level,
+                menu.parent.id,
+                menu.url,
+                menu.order,
+                menu.update_datetime,
+                menu.id)
+
+        return mysql_helper.execute_non_query(sql, args)
+
 
 def _build_menu_item(data):
     u"""

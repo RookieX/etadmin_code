@@ -132,6 +132,11 @@ def execute_non_query(sql, params=None):
         :rtype: int
         :return: 受影响行数
     """
+    with open_write_db() as db:
+        cursor = db.cursor(MySQLdb.cursors.DictCursor)
+        row_count = cursor.execute(sql, params)
+        db.commit()
+        return row_count
 
 
 # 只读库配置
