@@ -4,7 +4,7 @@
 编辑菜单
 {% end %}
 
-{% block main%}
+{% block main %}
 <form method="post">
     <div class="formbody">
 
@@ -29,17 +29,11 @@
             </li>
             <li>
                 <label>父菜单</label>
-                <div id="parent_menus" class="dropdown">
-                    <button type="button" class="dropdown-btn">
-                        <span class="dropdown-text">请选择</span>
-                        <span class="triangle"></span>
-                    </button>
-                    <ul>
-                        {% for pm in bag.parent_menus %}
-                        <li value="{{ pm.id }}">{{ pm.display_name }}</li>
-                        {% end %}
-                    </ul>
-                </div>
+                <select id="parent_menu" name="parent_menu" data-valField="id" data-txtField="display_name">
+                    {% for pm in bag.parent_menus %}
+                    <option value="{{ pm.id }}">{{ pm.display_name }}</option>
+                    {% end %}
+                </select>
             </li>
             <li>
                 <label>url</label>
@@ -62,6 +56,8 @@
 {% block footer %}
 <script type="text/javascript">
     $(function () {
+        var parent_menus_ddl = $('#parent_menu').dropdown();
+
         $('input[name=level]').blur(function () {
             var self = $(this);
             var ddl = $('#parent_menus');
@@ -75,14 +71,15 @@
                 },
                 success: function (resp) {
                     if (resp.status === 0) {
-                        var ddlContainer = ddl.find('ul');
-                        ddlContainer.empty();
-                        $.each(resp.data, function (index, item) {
-                            $('<li>')
-                                    .text(item.display_name)
-                                    .val(item.id).appendTo(ddlContainer);
-                        });
-                        initDropdownList(ddl);
+                        {#                        var ddlContainer = ddl.find('ul');#}
+                        {#                        ddlContainer.empty();#}
+                        {#                        $.each(resp.data, function (index, item) {#}
+                        {#                            $('<li>')#}
+                        {#                                    .text(item.display_name)#}
+                        {#                                    .val(item.id).appendTo(ddlContainer);#}
+                        {#                        });#}
+                        {#                        initDropdownList(ddl);#}
+                        parent_menus_ddl.load(resp.data);
                     } else {
                         alert(resp.msg);
                     }
