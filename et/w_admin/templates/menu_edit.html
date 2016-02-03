@@ -60,7 +60,6 @@
 
         $('input[name=level]').blur(function () {
             var self = $(this);
-            var ddl = $('#parent_menus');
             var level = self.val();
             level = parseInt(level) - 1;
             $.ajax({
@@ -71,14 +70,6 @@
                 },
                 success: function (resp) {
                     if (resp.status === 0) {
-                        {#                        var ddlContainer = ddl.find('ul');#}
-                        {#                        ddlContainer.empty();#}
-                        {#                        $.each(resp.data, function (index, item) {#}
-                        {#                            $('<li>')#}
-                        {#                                    .text(item.display_name)#}
-                        {#                                    .val(item.id).appendTo(ddlContainer);#}
-                        {#                        });#}
-                        {#                        initDropdownList(ddl);#}
                         parent_menus_ddl.load(resp.data);
                     } else {
                         alert(resp.msg);

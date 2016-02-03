@@ -58,6 +58,7 @@
             li.attr('item-selected', 'true').siblings().removeAttr('item-selected');
         };
 
+        //下拉框对象
         function dropdown(elem, options) {
             var valField = elem.attr('data-valField');
             var txtField = elem.attr('data-txtField');
@@ -65,7 +66,9 @@
             this.init(elem, settings);
         }
 
+        //下拉框原型方法
         dropdown.prototype = {
+            //初始化下拉框
             init: function (elem, options) {
                 var ddl = $('<div>');
                 ddl.settings = options;
@@ -96,6 +99,7 @@
                 });
             },
 
+            //根据指定数据构造下拉框
             load: function (datas) {
                 var self = $(this);
                 var ddl = self.data('ddl');
@@ -112,11 +116,14 @@
                 ddl.find('.dropdown-text').text('请选择');
             },
 
+            //获取选中值
             getSelectedVal: function () {
                 var self = $(this);
                 var ddl = self.data('ddl');
                 return ddl.find('li[item-selected]').val();
             },
+
+            //获取选中文本
             getSelectedText: function () {
                 var self = $(this);
                 var ddl = self.data('ddl');
@@ -133,7 +140,7 @@
 
     $.fn.dropdown.defaults = {
         valField: 'value',
-        txtField: 'txt'
+        txtField: 'text'
     };
 
     $('select[data-dropdown]').dropdown({});
