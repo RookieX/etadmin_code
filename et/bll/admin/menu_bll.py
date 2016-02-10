@@ -88,6 +88,30 @@ class MenuBLL(object):
         return menus
 
     @staticmethod
+    def add(menu):
+        u"""
+            添加菜单
+
+            :param menu: 要添加的菜单
+            :type menu: Menu
+
+            :rtype: bool
+            :return: 是否成功
+        """
+        menu.update_datetime = menu.create_datetime = datetime.now()
+        menu.parent.id = int(menu.parent.id) if menu.parent.id else 0
+
+        row_count = MenuDAL.add(menu)
+
+        if row_count == 1:
+            # 清除缓存
+            cache.remove(cache_helper.all_menu_cache_key())
+            cache.remove(cache_helper.menu_cache_key_by_parent_id(menu.parent.id))
+            return True
+
+        return False
+
+    @staticmethod
     def update(menu):
         u"""
             更新菜单

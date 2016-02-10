@@ -49,7 +49,7 @@ class MenuEditHandler(AdminHandlerBase):
 
         self.render('menu_edit.html')
 
-    def post(self, menu_id):
+    def post(self, menu_id=0):
         arguments = self.get_arguments_dict(
             ['name',
              'display_name',
@@ -76,22 +76,23 @@ class MenuEditHandler(AdminHandlerBase):
         if not arguments['order']:
             return ajax_helper.write_json(self, -5, u'请输入排序')
 
-        self.arguments = arguments
-        if not menu_id:
-            self.add_menu()
-        else:
-            self.update_menu()
-
-    def add_menu(self):
-        pass
-
-    def update_menu(self):
-        arguments = self.arguments
         menu = Menu.build_from_dict(arguments)
         menu.parent = Menu.build_from_dict({'id': arguments['parent_menu']})
 
-        if MenuBLL.update(menu) == 1:
+        if not menu_id:
+            self.add_menu(menu)
+        else:
+            self.update_menu(menu)
+
+    def add_menu(self, menu):
+        if MenuBLL.add(menu):
             return ajax_helper.write_json(self, 0)
+        return ajax_helper.write_json(self, -1)
+
+    def update_menu(self, menu):
+        if MenuBLL.update(menu):
+            return ajax_helper.write_json(self, 0)
+        return ajax_helper.write_json(self, -1)
 
 
 @route(r'/load_menus')

@@ -39,6 +39,12 @@ class Null(object):
     def __nonzero__(self):
         return False
 
+    def __iter__(self):
+        return self
+
+    def next(self):
+        raise StopIteration
+
 
 class Dynamic(object):
     u"""

@@ -23,6 +23,7 @@ class MenuDAL(object):
                     url,
                     `order`
             FROM menu
+            ORDER BY `order`
         '''
 
         datas = mysql_helper.query(sql)
@@ -55,6 +56,7 @@ class MenuDAL(object):
             LEFT JOIN admin_user_menu_mapping AS map
             ON m.id = map.menu_id
             WHERE map.user_name = %s
+            ORDER BY `order`
         '''
 
         args = (user_name,)
@@ -85,12 +87,56 @@ class MenuDAL(object):
                     `order`
             FROM menu
             WHERE parent_id = %s
+            ORDER BY `order`
         '''
 
         args = (parent_id,)
         datas = mysql_helper.query(sql, args)
 
         return [_build_menu_item(data) for data in datas]
+
+    @staticmethod
+    def add(menu):
+        u"""
+            添加菜单
+
+            :param menu: 要添加的菜单
+            :type menu: Menu
+
+            :rtype: bool
+            :return: 是否成功
+        """
+
+        sql = u'''
+            INSERT INTO menu
+            (
+              `name`,
+              display_name,
+              description,
+              `level`,
+              parent_id,
+              url,
+              `order`,
+              create_datetime,
+              update_datetime
+            )
+            VALUES
+            (
+              %s,%s,%s,%s,%s,%s,%s,%s,%s
+            )
+        '''
+        args = (menu.name,
+                menu.display_name,
+                menu.description,
+                menu.level,
+                menu.parent.id,
+                menu.url,
+                menu.order,
+                menu.create_datetime,
+                menu.update_datetime
+                )
+
+        return mysql_helper.execute_non_query(sql, args)
 
     @staticmethod
     def update(menu):
