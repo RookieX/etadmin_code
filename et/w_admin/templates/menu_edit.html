@@ -31,7 +31,8 @@
                 <div class="vocation">
                     <select id="parent_menu" name="parent_menu">
                         {% for pm in bag.parent_menus %}
-                        <option value="{{ pm.id }}">{{ pm.display_name }}</option>
+                        <option value="{{ pm.id }}"
+                                {% if pm.id == bag.menu.parent.id %}selected{% end %}>{{ pm.display_name }}</option>
                         {% end %}
                     </select></div>
             </li>
@@ -49,7 +50,6 @@
             </li>
         </ul>
     </div>
-    <input type="hidden" name="menu_id" value="{{ bag.menu.id }}">
 </form>
 </div>
 {% end %}

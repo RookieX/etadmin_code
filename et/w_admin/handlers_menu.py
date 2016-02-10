@@ -80,16 +80,16 @@ class MenuEditHandler(AdminHandlerBase):
         menu.parent = Menu.build_from_dict({'id': arguments['parent_menu']})
 
         if not menu_id:
-            self.add_menu(menu)
+            self.add(menu)
         else:
-            self.update_menu(menu)
+            self.update(menu)
 
-    def add_menu(self, menu):
+    def add(self, menu):
         if MenuBLL.add(menu):
             return ajax_helper.write_json(self, 0)
         return ajax_helper.write_json(self, -1)
 
-    def update_menu(self, menu):
+    def update(self, menu):
         if MenuBLL.update(menu):
             return ajax_helper.write_json(self, 0)
         return ajax_helper.write_json(self, -1)

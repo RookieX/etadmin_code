@@ -8,7 +8,7 @@
     <ul class="toolbar">
         <li><a href="/menu_edit"><img src="/static/images/t01.png"/>添加</a></li>
         {% if bag.back_url %}
-        <li><a href="{{bag.back_url}}"><img src="/static/images/t01.png"/>返回上一级</a></li>
+        <li><a href="{{ bag.back_url }}"><img src="/static/images/t01.png"/>返回上一级</a></li>
         {% end %}
     </ul>
 
@@ -27,6 +27,8 @@
         <th>父级菜单名</th>
         <th>url</th>
         <th>顺序</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -35,16 +37,24 @@
     <tr>
         <td><input type="checkbox"/></td>
         <td>{{ menu.id }}</td>
-        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.name }}</a>{% else %}{{ menu.name }}{% end
-            %}
+        <td>{% if menu.sub_menus %}<a
+                href="/menu_list/{{ menu.id }}">{{ menu.name }}</a>{% else %}{{ menu.name }}{% end %}
         </td>
-        <td>{% if menu.sub_menus %}<a href="/menu_list/{{ menu.id }}">{{ menu.display_name }}</a>{% else %}{{
-            menu.display_name }}{% end %}</a></td>
+        <td>{% if menu.sub_menus %}
+            <a href="/menu_list/{{ menu.id }}">
+                {{ menu.display_name }}
+            </a>
+            {% else %}
+            {{ menu.display_name }}
+            {% end %}
+        </td>
         <td>{{ menu.description }}</td>
         <td>{{ menu.level }}</td>
         <td>{{ menu.parent.name }}</td>
         <td>{{ menu.url }}</td>
         <td>{{ menu.order }}</td>
+        <td>{{ menu.create_datetime }}</td>
+        <td>{{ menu.update_datetime }}</td>
         <td>
             <a href="/menu_edit/{{ menu.id }}" class="tablelink">编辑</a>
         </td>

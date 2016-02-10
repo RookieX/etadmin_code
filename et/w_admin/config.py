@@ -21,3 +21,6 @@ primary_menu_level = 1
 
 # 二级菜单level
 secondary_menu_level = 2
+
+# 默认分页大小
+default_page_size = 20

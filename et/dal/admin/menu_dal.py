@@ -21,7 +21,9 @@ class MenuDAL(object):
                     `level`,
                     parent_id,
                     url,
-                    `order`
+                    `order`,
+                    create_datetime,
+                    update_datetime
             FROM menu
             ORDER BY `order`
         '''
@@ -51,7 +53,9 @@ class MenuDAL(object):
                     `level`,
                     parent_id,
                     url,
-                    `order`
+                    `order`,
+                    create_datetime,
+                    update_datetime
             FROM menu AS m
             LEFT JOIN admin_user_menu_mapping AS map
             ON m.id = map.menu_id
@@ -84,7 +88,9 @@ class MenuDAL(object):
                     `level`,
                     parent_id,
                     url,
-                    `order`
+                    `order`,
+                    create_datetime,
+                    update_datetime
             FROM menu
             WHERE parent_id = %s
             ORDER BY `order`

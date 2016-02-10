@@ -1,0 +1,79 @@
+{% extends base.html %}
+
+{% block pos %}
+编辑权限
+{% end %}
+
+{% block main %}
+<form id="permission_form" method="post">
+    <div class="formbody">
+        <div class="formtitle"><span>权限编辑</span></div>
+
+        <ul class="forminfo">
+            <li>
+                <label>权限名</label>
+                <input name="name" type="text" class="dfinput" value="{{ bag.permission.name }}"/>
+            </li>
+            <li>
+                <label>描述</label>
+                <input name="description" type="text" class="dfinput" value="{{ bag.permission.description }}"/>
+            </li>
+            <li>
+                <label>排序</label>
+                <input name="order" type="text" class="dfinput" value="{{ bag.permission.order }}"/>
+            </li>
+            <li>
+                <label>&nbsp;</label>
+                <input type="submit" class="btn" value="确认保存"/>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
+{% end %}
+
+{% block footer %}
+<script type="text/javascript">
+    $(function () {
+
+        //表单验证
+        $('#permission_form').validate({
+            errorElement: 'p',
+            errorClass: 'valid-error',
+            rules: {
+                name: {
+                    required: true
+                },
+                order: {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                name: {
+                    required: '请填写权限名'
+                },
+                order: {
+                    required: '请填写排序',
+                    digits: '排序必须是数字'
+                }
+            },
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    dataType: 'JSON',
+                    success: function (resp) {
+                        if (resp.status === 0) {
+                            alert('保存成功');
+                        } else {
+                            alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        alert('提交失败');
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% end %}

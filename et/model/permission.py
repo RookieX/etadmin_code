@@ -12,6 +12,8 @@ class Permission(ModelBase):
         self.__name = null
         self.__description = null
         self.__order = null
+        self.__create_datetime = null
+        self.__update_datetime = null
 
     @property
     def id(self):
@@ -44,3 +46,19 @@ class Permission(ModelBase):
     @order.setter
     def order(self, value):
         self.__order = value
+
+    @property
+    def create_datetime(self):
+        return self.__create_datetime
+
+    @create_datetime.setter
+    def create_datetime(self, value):
+        self.__create_datetime = value
+
+    @property
+    def update_datetime(self):
+        return self.__update_datetime
+
+    @update_datetime.setter
+    def update_datetime(self, value):
+        self.__update_datetime = value
