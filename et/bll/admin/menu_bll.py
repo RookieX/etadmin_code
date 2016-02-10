@@ -28,7 +28,7 @@ class MenuBLL(object):
         if not menus:
             menus = MenuDAL.query_all()
             _build_menu_hierarchy(menus)
-            cache.set(cache_key, menus)
+            cache.set(cache_key, menus, expire_seconds=config.default_cache_seconds)
 
         return menus
 
@@ -47,8 +47,8 @@ class MenuBLL(object):
         menus = cache.get(cache_key)
         if not menus:
             menus = filter(lambda m: m.parent.id == parent_id, cls.query_all())
-            # menus = [_format_menu_item(menu) for menu in menus]
-            cache.set(cache_key, menus)
+
+            cache.set(cache_key, menus, expire_seconds=config.default_cache_seconds)
 
         return menus
 

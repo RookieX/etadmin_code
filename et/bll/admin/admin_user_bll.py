@@ -55,6 +55,6 @@ class AdminUserBLL(object):
             user.menus = MenuDAL.query_by_user_name(user_name)
             user.department = DepartmentDAL.query_by_user_name(user_name)
             if user:
-                cache.set(cache_key, user, expire_seconds=config.default_cache_seconds)
+                cache.set(cache_key, user, expire_seconds=config.session_cache_seconds)
 
         return user
