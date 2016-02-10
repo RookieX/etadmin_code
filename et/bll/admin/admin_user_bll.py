@@ -10,6 +10,7 @@ from ...dal.admin import PermissionDAL
 from ...dal.admin import MenuDAL
 from ...dal.admin import DepartmentDAL
 
+from ..common.helper import page_helper
 import config
 
 cache = LocalCache()
@@ -53,3 +54,20 @@ class AdminUserBLL(object):
         user.department = DepartmentDAL.query_by_user_name(user_name)
 
         return user
+
+    @staticmethod
+    def query(page_index, page_size):
+        u"""
+            分页查找后台用户
+
+            :param page_index: 页号
+            :param page_size:  分页大小
+
+            :type page_index: int
+            :type page_size:  int
+
+            :rtype: list[AdminUser]
+            :return: 后台用户列表
+        """
+        start, end = page_helper.calc_page_range(page_index, page_size)
+        return AdminUserDAL.query(start, end)

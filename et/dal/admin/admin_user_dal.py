@@ -3,7 +3,7 @@
 # Author: 徐鹏程
 
 from ...sql_helper import mysql_helper
-from ...model import AdminUser
+from ...model import AdminUser  # , UserType, Department, Position
 
 
 class AdminUserDAL(object):
@@ -62,3 +62,58 @@ class AdminUserDAL(object):
 
         if user:
             return AdminUser.build_from_dict(user)
+
+    @staticmethod
+    def query(start, end):
+        u"""
+            分页查找后台用户
+
+            :param start: 开始记录
+            :param end:  结束记录
+
+            :type start: int
+            :type end:  int
+
+            :rtype: list[AdminUser]
+            :return: 后台用户列表
+        """
+
+        sql = u'''
+            SELECT  user_name,
+                    display_name,
+                    password,
+                    user_type_id,
+                    create_datetime,
+                    update_datetime,
+                    department_id,
+                    position_id,
+                    parent_position_id
+            FROM admin_user
+            LIMIT %s,%s
+        '''
+
+        args = (start, end)
+
+        datas = mysql_helper.query(sql, args)
+
+        return [_build_admin_user(data) for data in datas]
+
+
+def _build_admin_user(data):
+    u"""
+        构造后台用户信息
+
+        :param data: 后台用户信息
+
+        :type data: dict
+
+        :rtype: AdminUser
+        :return: 后台用户
+    """
+    admin_user = AdminUser.build_from_dict(data)
+    admin_user.user_type = UserType.build_from_dict()
+    admin_user.department = Department.build_from_dict()
+    admin_user.position = Position.build_from_dict()
+    admin_user.parent_position = Position.build_from_dict()
+
+    return admin_user

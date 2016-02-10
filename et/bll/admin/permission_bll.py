@@ -7,6 +7,8 @@ from datetime import datetime
 from ...dal.admin import PermissionDAL
 from ...model import Permission
 
+from ..common.helper import page_helper
+
 
 class PermissionBLL(object):
     @staticmethod
@@ -24,8 +26,7 @@ class PermissionBLL(object):
             :return: 权限列表
         """
 
-        start = (page_index - 1) * page_size + 1
-        end = start + page_size - 1
+        start, end = page_helper.calc_page_range(page_index, page_size)
         return PermissionDAL.query(start, end)
 
     @staticmethod

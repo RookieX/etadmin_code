@@ -10,6 +10,8 @@ from et.bll.admin import AdminUserBLL
 from et.w_admin.common.base import AdminHandlerBase
 from et.w_admin.common.helper import web_helper
 
+import config
+
 
 @route(r'/login')
 class LoginHandler(AdminHandlerBase):
@@ -42,3 +44,11 @@ class LogoutHandler(AdminHandlerBase):
         web_helper.remove_login_session(self)
 
         self.redirect('/login')
+
+
+@route(r'/admin_user_list', r'/admin_user_list/p(\d+)')
+class AdminUserListHandler(AdminHandlerBase):
+    def get(self, page_index=1):
+        page_index = int(page_index)
+
+        self.bag.users = AdminUserBLL.query(page_index, config.default_page_size)
