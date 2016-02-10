@@ -20,6 +20,16 @@ class AliMemcached(CacheBase):
     def __init__(self):
         super(AliMemcached, self).__init__(host, port)
 
+    def remove(self, key):
+        u"""
+            删除缓存
+
+            :param key: 键
+
+            :type key: str
+        """
+        self._client.delete(key)
+
     def _create_client(self):
         u"""
             创建缓存客户端

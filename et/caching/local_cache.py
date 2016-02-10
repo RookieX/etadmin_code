@@ -79,20 +79,8 @@ class LocalCache(CacheBase):
             :param key: 键
 
             :type key: str
-
-            :return: 缓存的值
         """
-        val, expires = self._client.pop(key, (None, None))
-
-        if val is None:
-            return val
-
-        # 过期处理
-        if expires < datetime.now():
-            self._client.pop(key, None)
-            val = None
-
-        return val
+        self._client.pop(key, (None, None))
 
     def _create_client(self):
         u"""

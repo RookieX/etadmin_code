@@ -50,6 +50,16 @@ class CacheBase(object):
         """
         return self._client.get(key)
 
+    def remove(self, key):
+        u"""
+            删除缓存
+
+            :param key: 键
+
+            :type key: str
+        """
+        raise NotImplementedError
+
     def _create_client(self):
         u"""
             创建缓存客户端，由实际的缓存子类实现

@@ -46,14 +46,10 @@ class AdminUserBLL(object):
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
         """
-        cache_key = cache_helper.admin_user_cache_key(user_name)
-        user = cache.get(cache_key)
-        if not user:
-            user = AdminUserDAL.query_by_user_name(user_name)
-            user.permissions = PermissionDAL.query_by_user_name(user_name)
-            user.menus = MenuDAL.query_by_user_name(user_name)
-            user.department = DepartmentDAL.query_by_user_name(user_name)
-            if user:
-                cache.set(cache_key, user, expire_seconds=config.session_cache_seconds)
+
+        user = AdminUserDAL.query_by_user_name(user_name)
+        user.permissions = PermissionDAL.query_by_user_name(user_name)
+        user.menus = MenuDAL.query_by_user_name(user_name)
+        user.department = DepartmentDAL.query_by_user_name(user_name)
 
         return user

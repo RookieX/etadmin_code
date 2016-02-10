@@ -95,13 +95,21 @@ class MenuBLL(object):
             :param menu: 要更新的菜单
             :type menu: Menu
 
-            :rtype: long
-            :return: 受影响行数
+            :rtype: bool
+            :return: 是否成功
         """
 
         menu.update_datetime = datetime.now()
         menu.parent.id = int(menu.parent.id) if menu.parent.id else 0
-        return MenuDAL.update(menu)
+        row_count = MenuDAL.update(menu)
+
+        if row_count == 1:
+            # 清除缓存
+            cache.remove(cache_helper.all_menu_cache_key())
+            cache.remove(cache_helper.menu_cache_key_by_parent_id(menu.parent.id))
+            return True
+
+        return False
 
 
 def _build_menu_hierarchy(menus):
