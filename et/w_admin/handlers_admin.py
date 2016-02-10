@@ -34,3 +34,11 @@ class LoginHandler(AdminHandlerBase):
         from_url = self.get_argument('from_url', '/')
 
         ajax_helper.write_json(self, 0, data={'redirect': from_url})
+
+
+@route(r'/logout')
+class LogoutHandler(AdminHandlerBase):
+    def get(self):
+        web_helper.remove_login_session(self)
+
+        self.redirect('/login')

@@ -48,11 +48,3 @@ class LeftHandler(AdminHandlerBase):
         self.bag.menus = filter(lambda m: m.level == config.primary_menu_level and m.parent.id == parent_id,
                                 user_info.menus)
         self.render('left.html')
-
-
-@route(r'/logout')
-class LogoutHandler(AdminHandlerBase):
-    def get(self):
-        web_helper.remove_login_session(self)
-
-        self.redirect('/login')
