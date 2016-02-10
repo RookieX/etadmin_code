@@ -2,8 +2,7 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
-from ...common.helper import encrypt_helper
-from ...caching import build_cache_key
+from ...common.helper import encrypt_helper, cache_helper
 from ...caching.local_cache import LocalCache
 
 from ...dal.admin import AdminUserDAL
@@ -47,7 +46,7 @@ class AdminUserBLL(object):
         :rtype: AdminUser
         :return: AdminUser，没有找到返回None
         """
-        cache_key = build_cache_key(config.cache_prefix, user_name)
+        cache_key = cache_helper.admin_user_cache_key(user_name)
         user = cache.get(cache_key)
         if not user:
             user = AdminUserDAL.query_by_user_name(user_name)

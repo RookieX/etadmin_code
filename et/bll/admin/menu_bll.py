@@ -4,9 +4,10 @@
 
 from datetime import datetime
 
+from ...common.helper import cache_helper
 from ...dal.admin import MenuDAL
 from ...model import Menu
-from ...caching import LocalCache, build_cache_key
+from ...caching import LocalCache
 
 import config
 
@@ -22,7 +23,7 @@ class MenuBLL(object):
             :rtype: list[Menu]
         """
 
-        cache_key = build_cache_key(config.cache_prefix)
+        cache_key = cache_helper.all_menu_cache_key()
         menus = cache.get(cache_key)
 
         if not menus:
@@ -43,7 +44,7 @@ class MenuBLL(object):
             :rtype: list[Menu]
             :return: 菜单列表
         """
-        cache_key = build_cache_key(config.cache_prefix, str(parent_id))
+        cache_key = cache_helper.menu_cache_key_by_parent_id(parent_id)
         menus = cache.get(cache_key)
         if not menus:
             menus = filter(lambda m: m.parent.id == parent_id, cls.query_all())

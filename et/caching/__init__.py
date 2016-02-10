@@ -13,23 +13,3 @@ sys_path_extender.extend(config.third_party_path)
 from ali_memcached import AliMemcached
 from local_cache import LocalCache
 from local_memcached import LocalMemcached
-
-
-def build_cache_key(prefix, subfix='', key_name=None):
-    u"""
-        cache_key生成器
-
-        :param prefix: 前缀
-        :param subfix: 后缀
-        :param key_name: 键名
-
-        :type prefix: str
-        :type subfix: str
-        :type key_name: str
-
-        :rtype: str
-        :return: cache key
-    """
-    if not key_name:
-        key_name = sys._getframe(1).f_code.co_name
-    return '%s.%s.%s' % (prefix, subfix, key_name)
