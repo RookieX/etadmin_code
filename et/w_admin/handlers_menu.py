@@ -20,16 +20,16 @@ class MenuListHandler(AdminHandlerBase):
         parent_id = int(parent_id)
         page_index = int(page_index)
 
-        self.bag.menus = MenuBLL.query_by_parent_id(parent_id)
+        menus = MenuBLL.query_by_parent_id(parent_id)
 
         # 构造返回上一级功能
         actual_path = re.sub(r'/\d*$', '', self.request.path)
 
         # 没有上一级，不需要返回功能
         if parent_id != 0:
-            self.bag.back_url = '%s/%d' % (actual_path, self.bag.menus[0].parent.parent.id)
+            self.bag.back_url = '%s/%d' % (actual_path, menus[0].parent.parent.id)
 
-        self.render('menu_list.html')
+        self.render('menu_list.html', menus)
 
 
 @route(r'/menu_edit', r'/menu_edit/(\d+)')
@@ -37,17 +37,16 @@ class MenuEditHandler(AdminHandlerBase):
     def get(self, menu_id=0):
         menu_id = int(menu_id)
 
-        self.bag.menu = null
         self.bag.parent_menus = null
 
-        self.bag.menu = MenuBLL.query_by_id(menu_id)
+        menu = MenuBLL.query_by_id(menu_id)
 
-        if not self.bag.menu:
-            self.bag.menu = null
+        if not menu:
+            menu = null
         else:
-            self.bag.parent_menus = MenuBLL.query_by_level(self.bag.menu.level - 1)
+            self.bag.parent_menus = MenuBLL.query_by_level(menu.level - 1)
 
-        self.render('menu_edit.html')
+        self.render('menu_edit.html', menu)
 
     def post(self, menu_id=0):
         arguments = self.get_arguments_dict(

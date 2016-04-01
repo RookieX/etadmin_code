@@ -12,19 +12,19 @@
         <ul class="forminfo">
             <li>
                 <label>菜单名</label>
-                <input name="name" type="text" class="dfinput" value="{{ bag.menu.name }}"/>
+                <input name="name" type="text" class="dfinput" value="{{ model.name }}"/>
             </li>
             <li>
                 <label>显示名</label>
-                <input name="display_name" type="text" class="dfinput" value="{{ bag.menu.display_name }}"/>
+                <input name="display_name" type="text" class="dfinput" value="{{ model.display_name }}"/>
             </li>
             <li>
                 <label>描述</label>
-                <input name="description" type="text" class="dfinput" value="{{ bag.menu.description }}"/>
+                <input name="description" type="text" class="dfinput" value="{{ model.description }}"/>
             </li>
             <li>
                 <label>级别</label>
-                <input name="level" type="text" class="dfinput" value="{{ bag.menu.level }}"/>
+                <input name="level" type="text" class="dfinput" value="{{ model.level }}"/>
             </li>
             <li>
                 <label>父菜单</label>
@@ -32,17 +32,17 @@
                     <select id="parent_menu" name="parent_menu">
                         {% for pm in bag.parent_menus %}
                         <option value="{{ pm.id }}"
-                                {% if pm.id == bag.menu.parent.id %}selected{% end %}>{{ pm.display_name }}</option>
+                                {% if pm.id == model.parent.id %}selected{% end %}>{{ pm.display_name }}</option>
                         {% end %}
                     </select></div>
             </li>
             <li>
                 <label>url</label>
-                <input name="url" type="text" class="dfinput" value="{{ bag.menu.url }}"/>
+                <input name="url" type="text" class="dfinput" value="{{ model.url }}"/>
             </li>
             <li>
                 <label>排序</label>
-                <input name="order" type="text" class="dfinput" value="{{ bag.menu.order }}"/>
+                <input name="order" type="text" class="dfinput" value="{{ model.order }}"/>
             </li>
             <li>
                 <label>&nbsp;</label>

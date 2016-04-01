@@ -20,9 +20,9 @@ class PermissionListHandler(AdminHandlerBase):
     def get(self, page_index=1):
         page_index = int(page_index)
 
-        self.bag.permissions = PermissionBLL.query(page_index, config.default_page_size)
+        permissions = PermissionBLL.query(page_index, config.default_page_size)
 
-        self.render('permission_list.html')
+        self.render('permission_list.html', permissions)
 
 
 @route(r'/permission_edit', r'/permission_edit/(\d+)')
@@ -30,9 +30,9 @@ class PermissionEditHandler(AdminHandlerBase):
     def get(self, permission_id=0):
         permission_id = int(permission_id)
 
-        self.bag.permission = PermissionBLL.query_by_id(permission_id)
+        permission = PermissionBLL.query_by_id(permission_id)
 
-        self.render('permission_edit.html')
+        self.render('permission_edit.html', permission)
 
     def post(self, permission_id=0):
         arguments = self.get_arguments_dict(['name', 'description', 'order'])

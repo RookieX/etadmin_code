@@ -26,11 +26,11 @@ class TopHandler(AdminHandlerBase):
         user_info = web_helper.get_login_session(self)
 
         # 加载顶级菜单
-        self.bag.menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
-        self.bag.menus.sort(key=operator.attrgetter('order'))
+        menus = filter(lambda m: m.level == config.top_menu_level, user_info.menus)
+        menus.sort(key=operator.attrgetter('order'))
         self.bag.display_name = user_info.display_name
 
-        self.render('top.html')
+        self.render('top.html', menus)
 
 
 @route(r'/left', r'/left/(\d*)')
@@ -45,6 +45,6 @@ class LeftHandler(AdminHandlerBase):
         else:
             parent_id = int(parent_id)
 
-        self.bag.menus = filter(lambda m: m.level == config.primary_menu_level and m.parent.id == parent_id,
-                                user_info.menus)
-        self.render('left.html')
+        menus = filter(lambda m: m.level == config.primary_menu_level and m.parent.id == parent_id,
+                       user_info.menus)
+        self.render('left.html', menus)
