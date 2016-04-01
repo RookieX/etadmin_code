@@ -6,7 +6,7 @@ u"""
     ajax帮助类
 """
 
-import json
+import json_helper
 
 
 def write_json(handler, status, msg='', data=None):
@@ -25,4 +25,4 @@ def write_json(handler, status, msg='', data=None):
     """
 
     handler.set_header('Content-Type', 'application/json')
-    handler.write(json.dumps({'status': status, 'msg': msg, 'data': data}))
+    handler.write(json_helper.serialize({'status': status, 'msg': msg, 'data': data}))
