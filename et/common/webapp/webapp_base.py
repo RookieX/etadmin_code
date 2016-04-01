@@ -54,5 +54,5 @@ class WebApp(tornado.web.Application):
         io_loop = tornado.ioloop.IOLoop.instance()
 
         # 5s reload
-        tornado.autoreload.start(io_loop, check_time=5000)
+        tornado.autoreload.start(io_loop, check_time=500)
         io_loop.start()
