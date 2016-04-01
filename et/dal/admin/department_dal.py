@@ -37,3 +37,55 @@ class DepartmentDAL(object):
         dept = Department.build_from_dict(data)
         dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id']})
         return dept
+
+    @staticmethod
+    def query(start, end):
+        u"""
+            分页查找部门
+
+            :param start: 开始记录
+            :param end:  结束记录
+
+            :type start: int
+            :type end:  int
+
+            :rtype: list[Department]
+            :return: 部门列表
+        """
+
+        sql = u'''
+                SELECT  dept.id,
+                        dept.name,
+                        default_top_menu_id,
+                        menu.name AS menu_name,
+                        dept.create_datetime,
+                        dept.update_datetime
+                FROM department AS dept
+                LEFT JOIN menu
+                ON dept.default_top_menu_id = menu.id
+                LIMIT %s,%s;
+        '''
+
+        args = (start, end)
+
+        datas = mysql_helper.query(sql, args)
+
+        return [_build_department(data) for data in datas]
+
+
+def _build_department(data):
+    u"""
+        构造部门信息
+
+        :param data: 部门信息
+
+        :type data: dict
+
+        :rtype: Department
+        :return: 部门
+    """
+
+    dept = Department.build_from_dict(data)
+    dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id'], 'name': data['menu_name']})
+
+    return dept
