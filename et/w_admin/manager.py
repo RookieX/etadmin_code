@@ -23,8 +23,6 @@ def make_settings():
         :return: 配置字典
     """
     return {
-        'debug': True,
-        'autoreload': True,
         'static_path': os.path.join(os.path.dirname(__file__), 'static'),
         'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
     }

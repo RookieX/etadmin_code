@@ -5,6 +5,7 @@
 import tornado.web
 import tornado.httpserver
 import tornado.ioloop
+import tornado.autoreload
 
 from ..routing.url_route import route
 from ..routing.ui_module_route import UIModule
@@ -19,7 +20,7 @@ class WebApp(tornado.web.Application):
     # tornado基本配置
     __app_settings = {
         'debug': True,
-        'autoreload': True,
+        'autoreload': False,
         'cookie_secret': '190qweasd$%^RTYFGH'
     }
 
@@ -50,4 +51,8 @@ class WebApp(tornado.web.Application):
         """
         http_server = tornado.httpserver.HTTPServer(self, xheaders=True)
         http_server.listen(port)
-        tornado.ioloop.IOLoop.instance().start()
+        io_loop = tornado.ioloop.IOLoop.instance()
+
+        # 5s reload
+        tornado.autoreload.start(io_loop, check_time=5000)
+        io_loop.start()
