@@ -3,16 +3,12 @@
 # Author: 徐鹏程
 
 
-from et.common.routing import route
-from et.common.extend.type_extend import null
-from et.common.helper import ajax_helper
-
 from et.bll.admin import PermissionBLL
+from et.common.helper import ajax_helper
+from et.common.routing import route
 from et.model import Permission
-
+from et.w_admin import config
 from et.w_admin.common.base import AdminHandlerBase
-
-import config
 
 
 @route(r'/permission_list', r'/permission_list/p(\d+)')

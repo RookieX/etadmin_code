@@ -5,7 +5,6 @@
 from et.common.handler import UIModuleBase
 from et.common.routing import UIModule
 from et.w_admin.common.helper import web_helper
-import config
 
 
 @UIModule(r'LeftMenu')

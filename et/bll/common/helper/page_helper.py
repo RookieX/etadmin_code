@@ -24,4 +24,4 @@ def calc_page_range(page_index, page_size):
     start = (page_index - 1) * page_size + 1
     end = start + page_size - 1
 
-    return (start - 1, end - 1)
+    return start, end

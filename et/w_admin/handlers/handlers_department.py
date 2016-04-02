@@ -2,11 +2,10 @@
 # Date: 16-4-1
 # Author: 徐鹏程
 
-from et.common.routing.url_route import route
 from et.bll.admin import DepartmentBLL
-
+from et.common.routing.url_route import route
+from et.w_admin import config
 from et.w_admin.common.base import AdminHandlerBase
-import config
 
 
 @route(r'/department_list', r'/department_list/(\d*)')

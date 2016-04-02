@@ -5,11 +5,10 @@
 import operator
 
 from et.common.routing import route
-
+from et.w_admin import config
 from et.w_admin.common import common_response, permissions
 from et.w_admin.common.base import AdminHandlerBase, authentication, login
 from et.w_admin.common.helper import web_helper
-import config
 
 
 @route(r'/')

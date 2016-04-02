@@ -6,7 +6,9 @@
 import os
 import sys
 
-import config
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+from et.w_admin import config
 
 from et.common.helper import sys_path_extender
 
@@ -34,8 +36,7 @@ def main():
     """
     port = sys.argv[1]
 
-    handler_path = os.path.abspath('.')
-    WebApp(handler_path=handler_path, **make_settings()).run_server(port)
+    WebApp(**make_settings()).run_server(port)
 
 
 if __name__ == '__main__':
