@@ -18,9 +18,6 @@ class Null(object):
     def __getattr__(self, item):
         return self
 
-    def __getattribute__(self, item):
-        return self
-
     def __eq__(self, other):
         if other is None:
             return True
@@ -44,6 +41,12 @@ class Null(object):
 
     def next(self):
         raise StopIteration
+
+    def __reduce__(self):
+        u"""
+            pickle支持
+        """
+        return 'null'
 
 
 class Dynamic(object):

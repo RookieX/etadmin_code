@@ -8,10 +8,10 @@ u"""
 
 import uuid
 
-from ...caching import LocalCache
+from ...caching import LocalCache,LocalMemcached
 from .base_handler import BaseHandler
 
-cache = LocalCache()
+cache = LocalMemcached()
 
 
 class SessionHandler(BaseHandler):
