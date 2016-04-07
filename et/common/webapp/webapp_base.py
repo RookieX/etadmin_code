@@ -21,6 +21,8 @@ class WebApp(tornado.web.Application):
 
     # tornado基本配置
     __app_settings = {
+        'compress_response': True,
+        'gzip': True,
         'debug': True,
         'autoreload': False,
         'cookie_secret': '190qweasd$%^RTYFGH'
@@ -43,6 +45,8 @@ class WebApp(tornado.web.Application):
 
         # url路由
         self.__app_settings['handlers'] = route.routes()
+        if 'handlers' in settings:
+            self.__app_settings['handlers'].extend(settings['handlers'])
 
         # ui_module路由
         self.__app_settings['ui_modules'] = UIModule.moules()
