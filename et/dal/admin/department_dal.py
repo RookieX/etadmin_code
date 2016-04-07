@@ -98,6 +98,55 @@ class DepartmentDAL(object):
 
         return _build_department(data)
 
+    @staticmethod
+    def add(dept):
+        u"""
+            新增部门
+
+            :param dept: 部门
+            :type dept: Department
+
+            :return: 受影响行数
+            :rtype: int
+        """
+        sql = u'''
+            INSERT INTO department
+            (
+              `name`,
+              default_top_menu_id,
+              create_datetime,
+              update_datetime
+            )
+            VALUES
+            (%s,%s,%s,%s)
+        '''
+
+        args = (dept.name, dept.default_top_menu.id, dept.create_datetime, dept.update_datetime)
+
+        return mysql_helper.execute_non_query(sql, args)
+
+    @staticmethod
+    def update(dept):
+        u"""
+            更新部门
+
+            :param dept: 部门
+            :type dept: Department
+
+            :return: 受影响行数
+            :rtype: int
+        """
+        sql = u'''
+            UPDATE department
+            SET `name`=%s,
+                default_top_menu_id=%s,
+                update_datetime=%s
+            WHERE id=%s
+        '''
+        args = (dept.name, dept.default_top_menu.id, dept.update_datetime,dept.id)
+        result= mysql_helper.execute_non_query(sql, args)
+        return result
+
 
 def _build_department(data):
     u"""

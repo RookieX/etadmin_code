@@ -42,16 +42,11 @@ class PermissionEditHandler(AdminHandlerBase):
         permission.id = permission_id
 
         if permission_id:
-            self.update(permission)
+            result = PermissionBLL.update(permission)
         else:
-            self.add(permission)
+            result = PermissionBLL.add(permission)
 
-    def add(self, permission):
-        if PermissionBLL.add(permission):
-            return ajax_helper.write_json(self, 0)
-        return ajax_helper.write_json(self, -1)
+        if result:
+            return ajax_helper.write_success(self)
 
-    def update(self, permission):
-        if PermissionBLL.update(permission):
-            return ajax_helper.write_json(self, 0)
-        return ajax_helper.write_json(self, -1)
+        ajax_helper.write_error(self)

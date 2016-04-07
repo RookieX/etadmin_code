@@ -2,6 +2,8 @@
 # Date: 16-1-28
 # Author: 徐鹏程
 
+from datetime import datetime
+
 from ..common.helper import page_helper
 
 from ...model import Department
@@ -38,3 +40,32 @@ class DepartmentBLL(object):
         """
 
         return DepartmentDAL.find_by_id(dept_id)
+
+    @staticmethod
+    def add(dept):
+        u"""
+            新增部门
+
+            :param dept: 部门
+            :type dept: Department
+
+            :return: 添加是否成功
+            :rtype: bool
+        """
+        dept.create_datetime = dept.update_datetime = datetime.now()
+        return DepartmentDAL.add(dept) == 1
+
+    @staticmethod
+    def update(dept):
+        u"""
+            更新部门
+
+            :param dept: 部门
+            :type dept: Department
+
+            :return: 更新是否成功
+            :rtype: bool
+        """
+        dept.update_datetime = datetime.now()
+        return DepartmentDAL.update(dept) == 1
+
