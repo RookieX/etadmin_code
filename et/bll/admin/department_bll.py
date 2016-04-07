@@ -24,3 +24,17 @@ class DepartmentBLL(object):
         """
         start, end = page_helper.calc_page_range(page_index, page_size)
         return DepartmentDAL.query(start, end)
+
+    @staticmethod
+    def find_by_id(dept_id):
+        u"""
+            根据部门id查找部门信息
+
+            :param dept_id: 部门id
+            :type dept_id: int
+
+            :return: 部门信息
+            :rtype: Department
+        """
+
+        return DepartmentDAL.find_by_id(dept_id)

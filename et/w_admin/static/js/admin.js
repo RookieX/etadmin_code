@@ -18,4 +18,5 @@
 
 $(function () {
     $('.tablelist thead :checkbox').chkCheckAll($('.tablelist tbody :checkbox'));
+    $('.vocation select').uedSelect();
 });

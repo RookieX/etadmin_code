@@ -11,6 +11,8 @@ class Department(ModelBase):
         self.__id = null
         self.__name = null
         self.__default_top_menu = null
+        self.__create_datetime = null
+        self.__update_datetime = null
 
     @property
     def id(self):
@@ -35,3 +37,20 @@ class Department(ModelBase):
     @default_top_menu.setter
     def default_top_menu(self, value):
         self.__default_top_menu = value
+
+    @property
+    def create_datetime(self):
+        return self.__create_datetime
+
+    @create_datetime.setter
+    def create_datetime(self, value):
+        self.__create_datetime = value
+
+    @property
+    def update_datetime(self):
+        return self.__update_datetime
+
+    @update_datetime.setter
+    def update_datetime(self, value):
+        self.__update_datetime = value
+

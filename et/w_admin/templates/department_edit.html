@@ -1,52 +1,29 @@
 {% extends base.html %}
 
 {% block pos %}
-编辑菜单
+编辑部门
 {% end %}
 
 {% block main %}
 <form id="menu_form" method="post">
     <div class="formbody">
-        <div class="formtitle"><span>菜单编辑</span></div>
+        <div class="formtitle"><span>部门编辑</span></div>
 
         <ul class="forminfo">
             <li>
-                <label>菜单名</label>
+                <label>部门名称</label>
                 <input name="name" type="text" class="dfinput" value="{{ model.name }}"/>
             </li>
             <li>
-                <label>显示名</label>
-                <input name="display_name" type="text" class="dfinput" value="{{ model.display_name }}"/>
-            </li>
-            <li>
-                <label>描述</label>
-                <input name="description" type="text" class="dfinput" value="{{ model.description }}"/>
-            </li>
-            <li>
-                <label>级别</label>
-                <input name="level" type="text" class="dfinput" value="{{ model.level }}"/>
-            </li>
-            <li>
-                <label>父菜单</label>
+                <label>默认菜单</label>
                 <div class="vocation">
-                    <select id="parent_menu" name="parent_menu">
-                        {% for pm in bag.parent_menus %}
-                        <option value="{{ pm.id }}"
-                                {% if pm.id == model.parent.id %}selected{% end %}>{{ pm.display_name }}</option>
+                    <select id="default_menu" name="default_menu">
+                        {% for menu in bag.menus %}
+                        <option value="{{ menu.id }}"
+                                {% if menu.id == model.default_top_menu.id %}selected{% end %}>{{ menu.display_name }}</option>
                         {% end %}
-                    </select></div>
-            </li>
-            <li>
-                <label>url</label>
-                <input name="url" type="text" class="dfinput" value="{{ model.url }}"/>
-            </li>
-            <li>
-                <label>排序</label>
-                <input name="order" type="text" class="dfinput" value="{{ model.order }}"/>
-            </li>
-            <li>
-                <label>&nbsp;</label>
-                <input type="submit" class="btn" value="确认保存"/>
+                    </select>
+                </div>
             </li>
         </ul>
     </div>

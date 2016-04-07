@@ -72,6 +72,32 @@ class DepartmentDAL(object):
 
         return [_build_department(data) for data in datas]
 
+    @staticmethod
+    def find_by_id(dept_id):
+        u"""
+            根据部门id查找部门信息
+
+            :param dept_id: 部门id
+            :type dept_id: int
+
+            :return: 部门信息
+            :rtype: Department
+        """
+        sql = u'''
+                SELECT id,
+                        `name`,
+                        default_top_menu_id,
+                        create_datetime,
+                        update_datetime
+                FROM department
+                WHERE id = %s;
+        '''
+
+        args = (dept_id,)
+        data = mysql_helper.query_one(sql, args)
+
+        return _build_department(data)
+
 
 def _build_department(data):
     u"""
@@ -86,6 +112,6 @@ def _build_department(data):
     """
 
     dept = Department.build_from_dict(data)
-    dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id'], 'name': data['menu_name']})
+    dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id'], 'name': data.get('menu_name')})
 
     return dept

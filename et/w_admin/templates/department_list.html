@@ -6,7 +6,7 @@
 <div class="tools">
 
     <ul class="toolbar">
-        <li><a href="/menu_edit"><img src="/static/images/t01.png"/>添加</a></li>
+        <li><a href="/department_edit"><img src="/static/images/t01.png"/>添加</a></li>
     </ul>
 
 </div>
@@ -16,17 +16,24 @@
     <thead>
     <tr>
         <th><input type="checkbox"/></th>
+        <th>ID</th>
         <th>部门名称</th>
         <th>默认顶级菜单</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody>
     {% for department in model %}
     <tr>
         <td><input type="checkbox"/></td>
+        <td>{{ department.id }}</td>
         <td>{{ department.name }}</td>
-        <td>{{ department.default_top_menu.name }}
-        </td>
+        <td>{{ department.default_top_menu.name }}</td>
+        <td>{{ department.create_datetime }}</td>
+        <td>{{ department.update_datetime }}</td>
+        <td><a href="/department_edit/{{ department.id }}">编辑</a></td>
     </tr>
     {% end %}
     </tbody>
