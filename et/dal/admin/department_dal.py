@@ -66,7 +66,7 @@ class DepartmentDAL(object):
                 LIMIT %s,%s;
         '''
 
-        args = (start, end)
+        args = (start - 1, end - start)
 
         datas = mysql_helper.query(sql, args)
 
