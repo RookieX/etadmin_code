@@ -5,10 +5,14 @@
 u"""
     mysql数据库访问帮助类
 """
+import copy
 
 import MySQLdb
 import MySQLdb.cursors
 import MySQLdb.connections
+from MySQLdb.converters import conversions
+
+from ..common.extend.type_extend import null
 
 import config
 
@@ -19,7 +23,11 @@ class MySqlDbConnBase(MySQLdb.connections.Connection):
     """
 
     def __init__(self, *args, **kwargs):
-        super(MySqlDbConnBase, self).__init__(*args, **kwargs)
+        # 针对自定义Null类型到mysql的NULL类型的转换
+        my_conv = copy.deepcopy(conversions)
+        my_conv[type(null)] = Null2NULL
+        
+        super(MySqlDbConnBase, self).__init__(*args, conv=my_conv, **kwargs)
 
     def __enter__(self):
         return self
@@ -137,6 +145,11 @@ def execute_non_query(sql, params=None):
         row_count = cursor.execute(sql, params)
         db.commit()
         return row_count
+
+
+def Null2NULL(o, d):
+    """Convert Null to NULL."""
+    return 'NULL'
 
 
 # 只读库配置
