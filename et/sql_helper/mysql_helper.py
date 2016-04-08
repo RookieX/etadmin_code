@@ -26,7 +26,7 @@ class MySqlDbConnBase(MySQLdb.connections.Connection):
         # 针对自定义Null类型到mysql的NULL类型的转换
         my_conv = copy.deepcopy(conversions)
         my_conv[type(null)] = Null2NULL
-        
+
         super(MySqlDbConnBase, self).__init__(*args, conv=my_conv, **kwargs)
 
     def __enter__(self):
