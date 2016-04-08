@@ -7,7 +7,7 @@ u"""
 """
 
 from et.common.handler import SessionHandler
-
+from et.w_admin.common import common_response
 from et.w_admin.common.helper import web_helper
 
 
@@ -74,26 +74,40 @@ def authentication(permission, no_perm_callback, fail_callback):
     return _wrapper
 
 
-def login(non_callback):
+def login(func):
     u"""
-        登录验证装饰器
-
-        :param non_callback: 未登录回调
-
-        :type non_callback: function
+        普通登录验证装饰器
     """
 
-    def _wrapper(func):
-        def __wrapper(handler, *args, **kwargs):
-            user = web_helper.get_login_session(handler)
-            if user:
-                return func(handler, *args, **kwargs)
-            else:
-                return non_callback(handler, *args, **kwargs)
-
-        return __wrapper
+    def _wrapper(handler, *args, **kwargs):
+        return __login(func, handler, 'html', *args, **kwargs)
 
     return _wrapper
+
+
+def json_login(func):
+    u"""
+        json登录验证装饰器
+    """
+
+    def _wrapper(handler, *args, **kwargs):
+        return __login(func, handler, 'json', *args, **kwargs)
+
+    return _wrapper
+
+
+def __login(func, handler, resp_type, *args, **kwargs):
+    u"""
+        登录验证
+    """
+    user = web_helper.get_login_session(handler)
+    if user:
+        return func(handler, *args, **kwargs)
+    else:
+        if resp_type == 'json':
+            return common_response.resp_need_login_json(handler, *args, **kwargs)
+        else:
+            return common_response.resp_need_login_regular(handler, *args, **kwargs)
 
 
 def _check_auth(permission, user_permissions):
