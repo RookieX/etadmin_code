@@ -90,7 +90,7 @@ def query(sql, params=None):
 def query_one(sql, params=None):
     u"""
         执行sql，只返回一条数据库记录。
-        如果没有数据，返回None
+        如果没有数据，返回null
 
         :param sql: sql语句
         :param params: sql参数
@@ -104,7 +104,7 @@ def query_one(sql, params=None):
         cursor = db.cursor(MySQLdb.cursors.DictCursor)
         if cursor.execute(sql, params):
             return cursor.fetchone()
-        return None
+        return null
 
 
 def query_scalar(sql, params=None):

@@ -1,0 +1,131 @@
+{% extends base.html %}
+
+{% block pos %}
+编辑职位
+{% end %}
+
+{% block main %}
+<form id="position_form" method="post">
+    <div class="formbody">
+        <div class="formtitle"><span>职位编辑</span></div>
+
+        <ul class="forminfo">
+            <li>
+                <label>职位名称</label>
+                <input name="name" type="text" class="dfinput" value="{{ model.name }}"/>
+            </li>
+            <li>
+                <label>级别</label>
+                <input name="level" type="text" class="dfinput" value="{{ model.level }}"/>
+            </li>
+            <li>
+                <label>父级职位</label>
+                <div class="vocation">
+                    <select id="parent_position" name="parent_position">
+                        {% for pos in bag.positions %}
+                        <option value="{{ pos.id }}"
+                                {% if pos.id == model.parent.id %}selected{% end %}>{{ pos.name }}</option>
+                        {% end %}
+                    </select>
+                </div>
+            </li>
+
+            <li>
+                <label>&nbsp;</label>
+                <input type="submit" class="btn" value="确认保存"/>
+            </li>
+        </ul>
+    </div>
+</form>
+</div>
+{% end %}
+
+{% block footer %}
+<script type="text/javascript">
+    $(function () {
+        //更改级别重新加载父职位
+        $('input[name=level]').blur(function () {
+            var self = $(this);
+            var level = self.val();
+            level = parseInt(level) - 1;
+            $.ajax({
+                url: '/load_positions',
+                type: 'GET',
+                data: {
+                    level: level
+                },
+                success: function (resp) {
+                    if (resp.status === 0) {
+                        var parent_position = $('#parent_position');
+                        parent_position.empty();
+                        $('<option>').val('').text('请选择').appendTo(parent_position);
+                        $.each(resp.data, function (index, item) {
+                            $('<option>').val(item.id).text(item.name).appendTo(parent_position);
+                        });
+                    } else {
+                        alert(resp.msg);
+                    }
+                },
+                error: function () {
+                    alert('加载职位出错');
+                }
+            });
+        });
+
+        //表单验证
+        $('#position_form').validate({
+            errorElement: 'p',
+            errorClass: 'valid-error',
+            rules: {
+                name: {
+                    required: true
+                },
+                level: {
+                    required: true,
+                    digits: true
+                },
+                parent_position: {
+                    selected: true
+                }
+            },
+            messages: {
+                name: {
+                    required: '请填写职位名称'
+                },
+                level: {
+                    required: '请填写级别',
+                    digits: '级别必须是数字'
+                },
+                parent_position: {
+                    selected: '请选择父级职位'
+                }
+            },
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    dataType: 'JSON',
+                    success: function (resp) {
+                        if (resp.status === 0) {
+                            alert('保存成功');
+                        } else {
+                            alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        alert('提交失败');
+                    }
+                });
+            }
+        });
+
+        $.validator.addMethod('selected', function (value, element) {
+            value = $(element).find('option:selected').val();
+            var level = $('input[name=level]').val();
+            if (level === '0' || level === undefined) {
+                return true;
+            } else {
+                return value !== '' && value !== undefined;
+            }
+        });
+    });
+</script>
+{% end %}

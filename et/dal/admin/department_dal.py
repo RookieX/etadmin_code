@@ -143,8 +143,8 @@ class DepartmentDAL(object):
                 update_datetime=%s
             WHERE id=%s
         '''
-        args = (dept.name, dept.default_top_menu.id, dept.update_datetime,dept.id)
-        result= mysql_helper.execute_non_query(sql, args)
+        args = (dept.name, dept.default_top_menu.id, dept.update_datetime, dept.id)
+        result = mysql_helper.execute_non_query(sql, args)
         return result
 
 

@@ -12,7 +12,7 @@ from et.bll.admin import MenuBLL
 from et.model import Menu
 
 from et.w_admin.common.base import AdminHandlerBase
-
+from et.w_admin.common.helper import admin_helper
 
 @route(r'/menu_list', r'/menu_list/(\d*)')
 class MenuListHandler(AdminHandlerBase):
@@ -99,12 +99,10 @@ class LoadMenusHandler(AdminHandlerBase):
     def get(self):
         level = self.get_argument('level', '')
 
-        re_pattern = r'^-?\d+$'
+        level = admin_helper.parse_int(level)
 
-        if not re.match(re_pattern, level):
+        if not level:
             return ajax_helper.write_json(self, -1, u'请先输入正确的level')
-
-        level = int(level)
 
         menus = MenuBLL.query_by_level(level)
 

@@ -6,3 +6,4 @@ from .admin_user import AdminUser
 from .permission import Permission
 from .menu import Menu
 from .department import Department
+from .position import Position

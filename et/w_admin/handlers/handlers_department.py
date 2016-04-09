@@ -17,6 +17,7 @@ from et.w_admin.common.base import AdminHandlerBase
 @route(r'/department_list', r'/department_list/(\d*)')
 class DepartmentListHandler(AdminHandlerBase):
     def get(self, page_index=1):
+        page_index = int(page_index)
         departments = DepartmentBLL.query(page_index, config.default_page_size)
         self.render('department_list.html', departments)
 

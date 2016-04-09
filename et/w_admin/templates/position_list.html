@@ -1,0 +1,43 @@
+{% extends base.html %}
+{% block title %}职位列表{% end %}
+{% block pos %}职位列表{% end %}
+
+{% block main %}
+<div class="tools">
+
+    <ul class="toolbar">
+        <li><a href="/position_edit"><img src="/static/images/t01.png"/>添加</a></li>
+    </ul>
+
+</div>
+
+
+<table class="tablelist">
+    <thead>
+    <tr>
+        <th><input type="checkbox"/></th>
+        <th>ID</th>
+        <th>职位名称</th>
+        <th>级别</th>
+        <th>上级</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for position in model %}
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td>{{ position.id }}</td>
+        <td>{{ position.name }}</td>
+        <td>{{ position.level }}</td>
+        <td>{{ position.parent.name }}</td>
+        <td>{{ position.create_datetime }}</td>
+        <td>{{ position.update_datetime }}</td>
+        <td><a href="/position_edit/{{ position.id }}">编辑</a></td>
+    </tr>
+    {% end %}
+    </tbody>
+</table>
+{% end %}
