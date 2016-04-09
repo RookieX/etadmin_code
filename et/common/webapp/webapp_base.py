@@ -3,6 +3,7 @@
 # Author: 徐鹏程
 
 import os
+import sys
 
 import tornado.web
 import tornado.httpserver
@@ -37,8 +38,11 @@ class WebApp(tornado.web.Application):
             :type settings: dict
             
         """
+        # 执行文件目录
+        execute_path = os.path.dirname(os.path.realpath(sys.argv[0]))
+
         # 默认handlers路径为程序启动目录下的handlers目录
-        handler_path = handler_path if handler_path else os.path.join(os.getcwd(), 'handlers')
+        handler_path = handler_path if handler_path else os.path.join(execute_path, 'handlers')
 
         modules_importer.import_modules(handler_path, '^handlers_.*\.py$')  # 加载handler文件，以便构造url映射
         modules_importer.import_modules(handler_path, '^ui_.*\.py$')  # 加载handler文件，以便构造ui module映射
