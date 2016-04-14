@@ -18,6 +18,7 @@
         <th><input type="checkbox"/></th>
         <th>ID</th>
         <th>职位名称</th>
+        <th>所属部门</th>
         <th>级别</th>
         <th>上级</th>
         <th>创建时间</th>
@@ -31,6 +32,7 @@
         <td><input type="checkbox"/></td>
         <td>{{ position.id }}</td>
         <td>{{ position.name }}</td>
+        <td>{{ position.department.name }}</td>
         <td>{{ position.level }}</td>
         <td>{{ position.parent.name }}</td>
         <td>{{ position.create_datetime }}</td>

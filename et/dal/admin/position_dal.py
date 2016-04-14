@@ -5,6 +5,7 @@
 from ...common.extend.type_extend import null
 from ...sql_helper import mysql_helper
 from ...model import Position
+from ...model import Department
 
 
 class PositionDAL(object):
@@ -28,6 +29,8 @@ class PositionDAL(object):
         sql = u'''
             SELECT  p.id,
                     p.name,
+                    p.department_id,
+                    dept.name AS dept_name,
                     p.level,
                     pp.name AS parent_position_name,
                     p.create_datetime,
@@ -35,6 +38,8 @@ class PositionDAL(object):
             FROM position AS p
             LEFT JOIN position AS pp
             ON p.parent_position_id = pp.id
+            LEFT JOIN department AS dept
+            on p.department_id = dept.id
             LIMIT %s,%s
         '''
 
@@ -62,6 +67,7 @@ class PositionDAL(object):
                     create_datetime,
                     update_datetime
             FROM position
+            WHERE id = %s
         '''
         args = (pos_id,)
         data = mysql_helper.query_one(sql, args)
@@ -84,7 +90,7 @@ class PositionDAL(object):
                     update_datetime
             FROM position
         '''
-        datas = mysql_helper.query_one(sql)
+        datas = mysql_helper.query(sql)
         return [_build_position(data) for data in datas]
 
     @staticmethod
@@ -124,16 +130,18 @@ class PositionDAL(object):
             INSERT INTO position
             (
                 `name`,
+                department_id,
                 `level`,
                 parent_position_id,
                 create_datetime,
                 update_datetime
             )
             VALUES
-            (%s,%s,%s,%s,%s)
+            (%s,%s,%s,%s,%s,%s)
         '''
         args = (
             position.name,
+            position.department.id,
             position.level,
             position.parent.id,
             position.create_datetime,
@@ -181,6 +189,8 @@ def _build_position(data):
         :rtype: Position
     """
     pos = Position.build_from_dict(data)
-    pos.parent = Position.build_from_dict({'name': data.get('parent_position_name', null)})
-    pos.parent = Position.build_from_dict({'id': data.get('parent_position_id', null)})
+    pos.parent = Position.build_from_dict(
+        {'id': data.get('parent_position_id', null), 'name': data.get('parent_position_name', null)})
+    pos.department = Department.build_from_dict(
+        {'id': data.get('department_id', null), 'name': data.get('dept_name', null)})
     return pos

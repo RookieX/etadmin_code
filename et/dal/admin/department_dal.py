@@ -2,6 +2,8 @@
 # Date: 16-1-28
 # Author: 徐鹏程
 
+from ...common.extend.type_extend import null
+
 from ...sql_helper import mysql_helper
 from ...model import Department
 from ...model import Menu
@@ -76,7 +78,7 @@ class DepartmentDAL(object):
         return [_build_department(data) for data in datas]
 
     @staticmethod
-    def find_by_id(dept_id):
+    def query_by_id(dept_id):
         u"""
             根据部门id查找部门信息
 
@@ -100,6 +102,25 @@ class DepartmentDAL(object):
         data = mysql_helper.query_one(sql, args)
 
         return _build_department(data)
+
+    @staticmethod
+    def query_all():
+        u"""
+            查找所有部门信息
+
+            :return: 部门信息列表
+            :rtype: list[Department]
+        """
+
+        sql = u'''
+            SELECT id,
+                   `name`
+            FROM department
+        '''
+
+        datas = mysql_helper.query(sql)
+
+        return [_build_department(data) for data in datas]
 
     @staticmethod
     def add(dept):
@@ -164,6 +185,7 @@ def _build_department(data):
     """
 
     dept = Department.build_from_dict(data)
-    dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id'], 'name': data.get('menu_name')})
+    dept.default_top_menu = Menu.build_from_dict(
+        {'id': data.get('default_top_menu_id', null), 'name': data.get('menu_name')})
 
     return dept

@@ -25,7 +25,7 @@ class DepartmentListHandler(AdminHandlerBase):
 @route(r'/department_edit', r'/department_edit/(\d*)')
 class DepartmentEditHandler(AdminHandlerBase):
     def get(self, dept_id=0):
-        department = null if not dept_id else DepartmentBLL.find_by_id(dept_id)
+        department = null if not dept_id else DepartmentBLL.query_by_id(dept_id)
 
         top_menus = MenuBLL.query_by_level(config.top_menu_level)
 

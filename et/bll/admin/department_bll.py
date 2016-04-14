@@ -28,7 +28,7 @@ class DepartmentBLL(object):
         return DepartmentDAL.query(start, end)
 
     @staticmethod
-    def find_by_id(dept_id):
+    def query_by_id(dept_id):
         u"""
             根据部门id查找部门信息
 
@@ -39,7 +39,18 @@ class DepartmentBLL(object):
             :rtype: Department
         """
 
-        return DepartmentDAL.find_by_id(dept_id)
+        return DepartmentDAL.query_by_id(dept_id)
+
+    @staticmethod
+    def query_all():
+        u"""
+            查找所有部门信息
+
+            :return: 部门信息列表
+            :rtype: list[Department]
+        """
+
+        return DepartmentDAL.query_all()
 
     @staticmethod
     def add(dept):

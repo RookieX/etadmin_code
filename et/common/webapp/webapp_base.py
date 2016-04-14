@@ -43,7 +43,7 @@ class WebApp(tornado.web.Application):
             # 执行文件目录
             execute_path = os.path.dirname(os.path.realpath(sys.argv[0]))
             handler_path = os.path.join(execute_path, 'handlers')
-            
+
         modules_importer.import_modules(handler_path, '^handlers_.*\.py$')  # 加载handler文件，以便构造url映射
         modules_importer.import_modules(handler_path, '^ui_.*\.py$')  # 加载handler文件，以便构造ui module映射
 

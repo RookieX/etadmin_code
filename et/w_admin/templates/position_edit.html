@@ -15,6 +15,18 @@
                 <input name="name" type="text" class="dfinput" value="{{ model.name }}"/>
             </li>
             <li>
+                <label>所属部门</label>
+                <div class="vocation">
+                    <select name="department_id">
+                        <option value="">请选择</option>
+                        {% for dept in bag.departments %}
+                        <option value="{{ dept.id }}"
+                                {% if dept.id == model.department.id %}selected{% end %}>{{ dept.name }}</option>
+                        {% end %}
+                    </select>
+                </div>
+            </li>
+            <li>
                 <label>级别</label>
                 <input name="level" type="text" class="dfinput" value="{{ model.level }}"/>
             </li>
@@ -48,6 +60,11 @@
             var self = $(this);
             var level = self.val();
             level = parseInt(level) - 1;
+            load_positions(level);
+        });
+
+        function load_positions(level) {
+
             $.ajax({
                 url: '/load_positions',
                 type: 'GET',
@@ -70,7 +87,7 @@
                     alert('加载职位出错');
                 }
             });
-        });
+        }
 
         //表单验证
         $('#position_form').validate({
@@ -78,6 +95,9 @@
             errorClass: 'valid-error',
             rules: {
                 name: {
+                    required: true
+                },
+                department_id: {
                     required: true
                 },
                 level: {
@@ -91,6 +111,9 @@
             messages: {
                 name: {
                     required: '请填写职位名称'
+                },
+                department_id: {
+                    required: '请选择部门'
                 },
                 level: {
                     required: '请填写级别',
