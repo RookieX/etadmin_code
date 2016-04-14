@@ -10,6 +10,7 @@ class Position(ModelBase):
     def __init__(self):
         self.__id = null
         self.__name = null
+        self.__department = null
         self.__level = null
         self.__parent = null
         self.__create_datetime = null
@@ -30,6 +31,14 @@ class Position(ModelBase):
     @name.setter
     def name(self, value):
         self.__name = value
+
+    @property
+    def department(self):
+        return self.__department
+
+    @department.setter
+    def department(self, value):
+        self.__department = value
 
     @property
     def level(self):

@@ -14,12 +14,9 @@ class AdminUser(ModelBase):
         self.__user_type = null
         self.__create_datetime = null
         self.__update_datetime = null
-        self.__department = null
         self.__position = null
-        self.__parent_position = null
         self.__permissions = []
-        self.menus = []
-        self.department = null
+        self.__menus = []
 
     @property
     def user_name(self):
@@ -70,28 +67,12 @@ class AdminUser(ModelBase):
         self.__update_datetime = value
 
     @property
-    def department(self):
-        return self.__department
-
-    @department.setter
-    def department(self, value):
-        self.__department = value
-
-    @property
     def position(self):
         return self.__position
 
     @position.setter
     def position(self, value):
         self.__position = value
-
-    @property
-    def parent_position(self):
-        return self.__parent_position
-
-    @parent_position.setter
-    def parent_position(self, value):
-        self.__parent_position = value
 
     @property
     def permissions(self):
@@ -108,11 +89,3 @@ class AdminUser(ModelBase):
     @menus.setter
     def menus(self, value):
         self.__menus = value
-
-    @property
-    def department(self):
-        return self.__department
-
-    @department.setter
-    def department(self, value):
-        self.__department = value
