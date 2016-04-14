@@ -84,6 +84,7 @@ class PositionDAL(object):
         sql = u'''
             SELECT  id,
                     `name`,
+                    department_id,
                     `level`,
                     parent_position_id,
                     create_datetime,

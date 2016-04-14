@@ -41,7 +41,7 @@ def resp_auth_fail_regular(handler, *args, **kwargs):
         :type args: tuple
         :type kwargs: dict
     """
-    handler.set_header('Content-Type', 'text/plain')
+    handler.set_header('Content-Type', 'text/plain; charset=utf-8')
     handler.write(u'没有权限')
 
 

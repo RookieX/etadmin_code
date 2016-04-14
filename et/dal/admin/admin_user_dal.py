@@ -2,8 +2,13 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
+from ...common.extend.type_extend import null
+
 from ...sql_helper import mysql_helper
-from ...model import AdminUser  # , UserType, Department, Position
+from ...model import AdminUser
+from ...model import Department
+from ...model import Position
+from ...model import Menu
 
 
 class AdminUserDAL(object):
@@ -44,22 +49,31 @@ class AdminUserDAL(object):
         """
 
         sql = u'''
-                SELECT  user_name,
-                        display_name,
-                        password,
-                        user_type_id,
-                        create_datetime,
-                        update_datetime,
-                        position_id
-            FROM admin_user
-            WHERE user_name = %s
+            SELECT  admin.user_name,
+                    admin.display_name,
+                    admin.password,
+                    admin.user_type_id,
+                    admin.create_datetime,
+                    admin.update_datetime,
+                    admin.position_id,
+                    admin.department_id,
+                    pos.name AS pos_name,
+                    pos.parent_position_id AS ppos_id,
+                    dept.name AS dept_name,
+                    dept.default_top_menu_id
+            FROM admin_user AS admin
+            LEFT JOIN position AS pos
+            ON admin.position_id = pos.id
+            LEFT JOIN department AS dept
+            ON admin.department_id = dept.id
+            WHERE admin.user_name = %s
         '''
         args = (user_name,)
 
-        user = mysql_helper.query_one(sql, args)
+        data = mysql_helper.query_one(sql, args)
 
-        if user:
-            return AdminUser.build_from_dict(user)
+        if data:
+            return _build_admin_user(data)
 
     @staticmethod
     def query(start, end):
@@ -77,14 +91,22 @@ class AdminUserDAL(object):
         """
 
         sql = u'''
-            SELECT  user_name,
-                    display_name,
-                    password,
-                    user_type_id,
-                    create_datetime,
-                    update_datetime,
-                    position_id
-            FROM admin_user
+            SELECT  admin.user_name,
+                    admin.display_name,
+                    admin.password,
+                    admin.user_type_id,
+                    admin.create_datetime,
+                    admin.update_datetime,
+                    admin.position_id,
+                    admin.department_id,
+                    pos.name AS pos_name,
+                    pos.parent_position_id AS ppos_id,
+                    dept.name AS dept_name
+            FROM admin_user AS admin
+            LEFT JOIN position AS pos
+            ON admin.position_id = pos.id
+            LEFT JOIN department AS dept
+            ON admin.department_id = dept.id
             LIMIT %s,%s
         '''
 
@@ -107,9 +129,11 @@ def _build_admin_user(data):
         :return: 后台用户
     """
     admin_user = AdminUser.build_from_dict(data)
-    admin_user.user_type = UserType.build_from_dict()
-    admin_user.department = Department.build_from_dict()
-    admin_user.position = Position.build_from_dict()
-    admin_user.parent_position = Position.build_from_dict()
+    admin_user.department = Department.build_from_dict(
+        {'id': data.get('department_id', null), 'name': data.get('dept_name', null)})
+    admin_user.department.default_top_menu = Menu.build_from_dict({'id': data.get('default_top_menu_id', null)})
+    admin_user.position = Position.build_from_dict(
+        {'id': data.get('position_id', null), 'name': data.get('pos_name', null)})
+    admin_user.position.parent_position = Position.build_from_dict({'id': data.get('ppos_id', null)})
 
     return admin_user
