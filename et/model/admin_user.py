@@ -15,6 +15,7 @@ class AdminUser(ModelBase):
         self.__create_datetime = null
         self.__update_datetime = null
         self.__position = null
+        self.__department = null
         self.__permissions = []
         self.__menus = []
 
@@ -73,6 +74,14 @@ class AdminUser(ModelBase):
     @position.setter
     def position(self, value):
         self.__position = value
+
+    @property
+    def department(self):
+        return self.__department
+
+    @department.setter
+    def department(self, value):
+        self.__department = value
 
     @property
     def permissions(self):

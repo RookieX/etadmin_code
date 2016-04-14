@@ -50,9 +50,7 @@ class AdminUserDAL(object):
                         user_type_id,
                         create_datetime,
                         update_datetime,
-                        department_id,
-                        position_id,
-                        parent_position_id
+                        position_id
             FROM admin_user
             WHERE user_name = %s
         '''
@@ -85,9 +83,7 @@ class AdminUserDAL(object):
                     user_type_id,
                     create_datetime,
                     update_datetime,
-                    department_id,
-                    position_id,
-                    parent_position_id
+                    position_id
             FROM admin_user
             LIMIT %s,%s
         '''

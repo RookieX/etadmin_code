@@ -25,18 +25,21 @@ class DepartmentDAL(object):
                         dept.name,
                         default_top_menu_id
                 FROM department AS dept
-                LEFT JOIN admin_user_department_mapping AS map
-                ON map.department_id = dept.id
-                WHERE map.user_name = %s
+                LEFT JOIN admin_user AS admin
+                ON admin.department_id = dept.id
+                WHERE admin.user_name = %s
         '''
 
         args = (user_name,)
 
         data = mysql_helper.query_one(sql, args)
 
-        dept = Department.build_from_dict(data)
-        dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id']})
-        return dept
+        if data:
+            dept = Department.build_from_dict(data)
+            dept.default_top_menu = Menu.build_from_dict({'id': data['default_top_menu_id']})
+            return dept
+
+        return None
 
     @staticmethod
     def query(start, end):

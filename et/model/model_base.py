@@ -31,6 +31,9 @@ class ModelBase(object):
 
         obj = cls()
 
+        if not properties:
+            return obj
+
         for name, value in properties.items():
             if hasattr(obj, name):
                 setattr(obj, name, value if value is not None else null)
