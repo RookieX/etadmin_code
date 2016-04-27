@@ -29,7 +29,7 @@ class AdminUserEditHandler(AdminHandlerBase):
         admin_user = null
         if admin_user_name:
             admin_user = AdminUserBLL.query_full_by_user_name(admin_user_name)
-        self.bag.user_types = UserType.all_types()
+        self.bag.user_types = UserType.all_types
         self.bag.positions = PositionBLL.query_all()
         self.bag.departments = DepartmentBLL.query_all()
 

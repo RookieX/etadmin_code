@@ -3,6 +3,7 @@
 {% block pos %}后台用户列表{% end %}
 
 {% block main %}
+{% from et.w_admin.common.enums import UserType %}
 <div class="tools">
 
     <ul class="toolbar">
@@ -32,7 +33,7 @@
         <td><input type="checkbox"/></td>
         <td>{{ user.user_name }}</td>
         <td>{{ user.display_name }}</td>
-        <td>{{ user.user_type }}</td>
+        <td>{{ UserType.type_name(user.user_type) }}</td>
         <td>{{ user.create_datetime }}</td>
         <td>{{ user.update_datetime }}</td>
         <td>{{ user.position.name }}</td>
