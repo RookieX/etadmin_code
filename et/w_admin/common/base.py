@@ -43,7 +43,7 @@ class AdminHandlerBase(SessionHandler):
         elif status_code == 500:
             self.write(u'服务器出错')
         else:
-            super(AdminHandlerBase, self).send_error(status_code, **kwargs)
+            super(AdminHandlerBase, self).write_error(status_code, **kwargs)
 
 
 def authentication(permission, no_perm_callback, fail_callback):
