@@ -2,6 +2,8 @@
 # Date: 16-1-20
 # Author: 徐鹏程
 
+from datetime import datetime
+
 from ...common.helper import encrypt_helper, cache_helper
 from ...caching.local_cache import LocalCache
 
@@ -9,6 +11,10 @@ from ...dal.admin import AdminUserDAL
 from ...dal.admin import PermissionDAL
 from ...dal.admin import MenuDAL
 from ...dal.admin import DepartmentDAL
+from ...dal.admin import PositionDAL
+
+from ...model import AdminUser
+from ...model import Department
 
 from ..common.helper import page_helper
 import config
@@ -71,3 +77,39 @@ class AdminUserBLL(object):
         """
         start, end = page_helper.calc_page_range(page_index, page_size)
         return AdminUserDAL.query(start, end)
+
+    @staticmethod
+    def add(admin_user):
+        u'''
+            添加后台用户
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :return: 添加是否成功
+            :rtype: bool
+        '''
+
+        admin_user.create_datetime = admin_user.update_datetime = datetime.now()
+
+        # 补全职位信息
+        position = PositionDAL.query_by_id(admin_user.position.id)
+
+        admin_user.department = Department.build_from_dict({'id': position.department.id})
+        return AdminUserDAL.add(admin_user) == 1
+
+    @staticmethod
+    def update(admin_user):
+        u'''
+            更新后台用户
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :return: 更新是否成功
+            :rtype: bool
+        '''
+
+        admin_user.update_datetime = datetime.now()
+
+        return AdminUserDAL.update(admin_user) == 1

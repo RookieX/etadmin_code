@@ -116,6 +116,46 @@ class AdminUserDAL(object):
 
         return [_build_admin_user(data) for data in datas]
 
+    @staticmethod
+    def add(admin_user):
+        u'''
+            添加后台用户
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :return: 受影响行数
+            :rtype: int
+        '''
+
+        sql = u'''
+            INSERT INTO admin_user
+            ( user_name
+            , display_name
+            , password
+            , user_type
+            , position_id
+            , department_id
+            , create_datetime
+            , update_datetime
+            )
+            VALUES
+            (%s,%s,%s,%s,%s,%s,%s,%s)
+        '''
+
+        args = (
+            admin_user.user_name,
+            admin_user.display_name,
+            admin_user.password,
+            admin_user.user_type,
+            admin_user.position.id,
+            admin_user.department.id,
+            admin_user.create_datetime,
+            admin_user.update_datetime
+        )
+
+        return mysql_helper.execute_non_query(sql, args)
+
 
 def _build_admin_user(data):
     u"""

@@ -64,6 +64,7 @@ class PositionDAL(object):
                     `name`,
                     `level`,
                     parent_position_id,
+                    department_id,
                     create_datetime,
                     update_datetime
             FROM position

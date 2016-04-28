@@ -12,7 +12,7 @@
         <ul class="forminfo">
             <li>
                 <label>用户名</label>
-                <input name="user_name" type="text" class="dfinput" value="{{ model.user_name }}"/>
+                <input name="user_name" type="text" class="dfinput" value="{{ model.user_name }}" {% if bag.is_update %}disabled{% end %}/>
             </li>
             <li>
                 <label>显示名</label>
@@ -67,6 +67,7 @@
     </div>
 </form>
 </div>
+<input id="is_update" type="hidden" value="{{ bag.is_update }}">
 {% end %}
 
 {% block footer %}
@@ -113,6 +114,9 @@
             submitHandler: function (form) {
                 $(form).ajaxSubmit({
                     dataType: 'JSON',
+                    data: {
+                        is_update: $('#is_update').val()
+                    },
                     success: function (resp) {
                         if (resp.status === 0) {
                             alert('保存成功');
