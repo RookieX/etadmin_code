@@ -36,14 +36,25 @@ class AdminHandlerBase(SessionHandler):
         return _check_auth(permission, user.permissions)
 
     def write_error(self, status_code=500, **kwargs):
-        if status_code == 404:
-            self.write(u'页面找不到')
-        elif status_code == 400:
-            self.write(u'请求缺少参数')
-        elif status_code == 500:
-            self.write(u'服务器出错')
+        if 400 <= status_code < 500:
+            self.render('400.html', kwargs.get('error_msg', u'请求出错'))
+        elif 500 <= status_code < 600:
+            self.render('500.html', kwargs.get('error_msg', u'请求出错'))
         else:
             super(AdminHandlerBase, self).write_error(status_code, **kwargs)
+
+    def error(self, error_msg, error_code=400):
+        u'''
+            向浏览器发送错误信息
+
+            :param error_msg: 错误消息
+            :param error_code: 错误代码
+
+            :type error_msg: unicode
+            :type error_code: int
+
+        '''
+        self.write_error(error_code, error_msg=error_msg)
 
 
 def authentication(permission, no_perm_callback, fail_callback):

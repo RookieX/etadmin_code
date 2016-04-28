@@ -49,8 +49,9 @@ class AdminUserBLL(object):
         """
 
         user = AdminUserDAL.query_by_user_name(user_name)
-        user.permissions = PermissionDAL.query_by_user_name(user_name)
-        user.menus = MenuDAL.query_by_user_name(user_name)
+        if user:
+            user.permissions = PermissionDAL.query_by_user_name(user_name)
+            user.menus = MenuDAL.query_by_user_name(user_name)
 
         return user
 

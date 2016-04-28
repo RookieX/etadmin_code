@@ -1593,3 +1593,7 @@ p.valid-error {
     margin-left: 85px;
     color: red;
 }
+
+.error-page{
+    margin: 0 auto;
+}
