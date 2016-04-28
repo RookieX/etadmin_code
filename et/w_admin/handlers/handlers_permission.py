@@ -3,10 +3,14 @@
 # Author: 徐鹏程
 
 
-from et.bll.admin import PermissionBLL
 from et.common.helper import ajax_helper
 from et.common.routing import route
+from et.common.extend.type_extend import null
+
+from et.bll.admin import PermissionBLL
+
 from et.model import Permission
+
 from et.w_admin import config
 from et.w_admin.common.base import AdminHandlerBase
 
@@ -25,8 +29,13 @@ class PermissionListHandler(AdminHandlerBase):
 class PermissionEditHandler(AdminHandlerBase):
     def get(self, permission_id=0):
         permission_id = int(permission_id)
+        permission = null
 
-        permission = PermissionBLL.query_by_id(permission_id)
+        if permission_id:
+
+            permission = PermissionBLL.query_by_id(permission_id)
+            if not permission:
+                return self.error(u'没有找到这个权限')
 
         self.render('permission_edit.html', permission)
 

@@ -14,6 +14,7 @@ from et.model import Menu
 from et.w_admin.common.base import AdminHandlerBase
 from et.w_admin.common.helper import admin_helper
 
+
 @route(r'/menu_list', r'/menu_list/(\d*)')
 class MenuListHandler(AdminHandlerBase):
     def get(self, parent_id=0, page_index=1):
@@ -37,13 +38,17 @@ class MenuEditHandler(AdminHandlerBase):
     def get(self, menu_id=0):
         menu_id = int(menu_id)
 
+        menu = null
+
+        if menu_id:
+            menu = MenuBLL.query_by_id(menu_id)
+
+            if not menu:
+                return self.error(u'没有找到这个菜单')
+
         self.bag.parent_menus = null
 
-        menu = MenuBLL.query_by_id(menu_id)
-
-        if not menu:
-            menu = null
-        else:
+        if menu:
             self.bag.parent_menus = MenuBLL.query_by_level(menu.level - 1)
 
         self.render('menu_edit.html', menu)

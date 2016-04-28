@@ -33,6 +33,8 @@ class PositionEditHandler(AdminHandlerBase):
 
         if pos_id:
             position = PositionBLL.query_by_id(pos_id)
+            if not position:
+                return self.error(u'没有找到这个职位')
 
         if position:
             self.bag.positions = PositionBLL.query_by_level(position.level - 1)

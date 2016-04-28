@@ -71,6 +71,10 @@ class PositionDAL(object):
         '''
         args = (pos_id,)
         data = mysql_helper.query_one(sql, args)
+
+        if not data:
+            return None
+
         return _build_position(data)
 
     @staticmethod

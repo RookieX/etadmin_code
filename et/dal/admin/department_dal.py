@@ -101,6 +101,9 @@ class DepartmentDAL(object):
         args = (dept_id,)
         data = mysql_helper.query_one(sql, args)
 
+        if not data:
+            return None
+
         return _build_department(data)
 
     @staticmethod
