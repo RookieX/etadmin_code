@@ -80,7 +80,7 @@ class AdminUserBLL(object):
 
     @staticmethod
     def add(admin_user):
-        u'''
+        u"""
             添加后台用户
 
             :param admin_user: 后台用户
@@ -88,19 +88,16 @@ class AdminUserBLL(object):
 
             :return: 添加是否成功
             :rtype: bool
-        '''
+        """
 
         admin_user.create_datetime = admin_user.update_datetime = datetime.now()
 
-        # 补全职位信息
-        position = PositionDAL.query_by_id(admin_user.position.id)
-
-        admin_user.department = Department.build_from_dict({'id': position.department.id})
+        AdminUserBLL.__add_department(admin_user)
         return AdminUserDAL.add(admin_user) == 1
 
     @staticmethod
     def update(admin_user):
-        u'''
+        u"""
             更新后台用户
 
             :param admin_user: 后台用户
@@ -108,8 +105,24 @@ class AdminUserBLL(object):
 
             :return: 更新是否成功
             :rtype: bool
-        '''
+        """
 
         admin_user.update_datetime = datetime.now()
 
+        AdminUserBLL.__add_department(admin_user)
         return AdminUserDAL.update(admin_user) == 1
+
+    @staticmethod
+    def __add_department(admin_user):
+        u"""
+            补全职位信息
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :rtype: AdminUser
+        """
+        position = PositionDAL.query_by_id(admin_user.position.id)
+        admin_user.department = Department.build_from_dict({'id': position.department.id})
+
+        return admin_user

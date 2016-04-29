@@ -12,12 +12,19 @@
         <ul class="forminfo">
             <li>
                 <label>用户名</label>
-                <input name="user_name" type="text" class="dfinput" value="{{ model.user_name }}" {% if bag.is_update %}disabled{% end %}/>
+                <input name="user_name" type="text" class="dfinput" value="{{ model.user_name }}"
+                       {% if bag.is_update %}disabled{% end %}/>
             </li>
             <li>
                 <label>显示名</label>
                 <input name="display_name" type="text" class="dfinput" value="{{ model.display_name }}"/>
             </li>
+            {% if not bag.is_update %}
+            <li>
+                <label>密码</label>
+                <input name="password" type="text" class="dfinput"/>
+            </li>
+            {% end %}
             <li>
                 <label>用户类型</label>
                 <div class="vocation">
@@ -49,7 +56,7 @@
             <li>
                 <label>部门</label>
                 <div class="vocation">
-                    <select id="department_id" name="department_id">
+                    <select id="department_id" name="department_id" disabled>
                         <option value="">
                         </option>
                         {% for dept in bag.departments %}
@@ -75,7 +82,7 @@
     $(function () {
         $('#position_id').change(function () {
             var dept_id = $('#position_id option:selected').attr('dept_id');
-            $('#department_id').val('1');
+            $('#department_id').val(dept_id);
             $('#department_id').uedSelect('setOption');
         });
 
@@ -90,6 +97,9 @@
                 display_name: {
                     required: true
                 },
+                password: {
+                    required: $('#is_update').val() != 'True'
+                },
                 user_type: {
                     required: true
                 },
@@ -103,6 +113,9 @@
                 },
                 display_name: {
                     required: '请填写显示名'
+                },
+                password: {
+                    required: '请填写密码'
                 },
                 user_type: {
                     required: '请选择用户类型'

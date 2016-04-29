@@ -118,7 +118,7 @@ class AdminUserDAL(object):
 
     @staticmethod
     def add(admin_user):
-        u'''
+        u"""
             添加后台用户
 
             :param admin_user: 后台用户
@@ -126,7 +126,7 @@ class AdminUserDAL(object):
 
             :return: 受影响行数
             :rtype: int
-        '''
+        """
 
         sql = u'''
             INSERT INTO admin_user
@@ -152,6 +152,37 @@ class AdminUserDAL(object):
             admin_user.department.id,
             admin_user.create_datetime,
             admin_user.update_datetime
+        )
+
+        return mysql_helper.execute_non_query(sql, args)
+
+    @staticmethod
+    def update(admin_user):
+        u"""
+            更新后台用户
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :return: 更新是否成功
+            :rtype: bool
+        """
+        sql = u'''
+            UPDATE admin_user
+            SET display_name=%s,
+                user_type=%s,
+                position_id=%s,
+                department_id=%s,
+                update_datetime=%s
+            WHERE user_name = %s
+        '''
+        args = (
+            admin_user.display_name,
+            admin_user.user_type,
+            admin_user.position.id,
+            admin_user.department.id,
+            admin_user.update_datetime,
+            admin_user.user_name
         )
 
         return mysql_helper.execute_non_query(sql, args)

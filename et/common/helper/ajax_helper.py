@@ -43,7 +43,7 @@ def write_success(handler, msg='', data=None):
     write_json(handler, 0, msg, data)
 
 
-def write_error(handler, msg='', data=None):
+def write_error(handler, msg=None, data=None):
     u"""
         向响应流中写入操作出错的json数据
 
@@ -55,4 +55,6 @@ def write_error(handler, msg='', data=None):
         :type msg: str
         :type data: dict
     """
+    msg = msg or u'操作失败'
+
     write_json(handler, -1, msg, data)
