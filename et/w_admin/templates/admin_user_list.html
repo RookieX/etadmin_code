@@ -38,7 +38,10 @@
         <td>{{ user.update_datetime }}</td>
         <td>{{ user.position.name }}</td>
         <td>{{ user.department.name }}</td>
-        <td><a href="/admin_user_edit/{{ user.user_name }}">编辑</a></td>
+        <td>
+            <a href="/admin_user_edit/{{ user.user_name }}">编辑</a>
+            <a href="/admin_user_reset_pwd/{{ user.user_name }}">重置密码</a>
+        </td>
     </tr>
     {% end %}
     </tbody>

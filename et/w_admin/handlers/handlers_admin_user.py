@@ -68,3 +68,19 @@ class AdminUserEditHandler(AdminHandlerBase):
             return ajax_helper.write_success(self)
 
         ajax_helper.write_error(self)
+
+
+@route(r'/admin_user_reset_pwd/(\w*)')
+class AdminUserResetPwdHandler(AdminHandlerBase):
+    def get(self, admin_user_name):
+        self.render('admin_user_reset_pwd.html', admin_user_name)
+
+    def post(self, admin_user_name):
+        pwd = self.get_argument('password')
+
+        pwd = encrypt_helper.password(pwd)
+
+        if AdminUserBLL.change_password(admin_user_name, pwd):
+            ajax_helper.write_success(self)
+        else:
+            ajax_helper.write_error(self, u'更新失败')

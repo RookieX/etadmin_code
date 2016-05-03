@@ -187,6 +187,33 @@ class AdminUserDAL(object):
 
         return mysql_helper.execute_non_query(sql, args)
 
+    @staticmethod
+    def change_password(admin_user):
+        u"""
+            修改密码
+
+            :param admin_user: 后台用户
+            :type admin_user: AdminUser
+
+            :return: 受影响行数
+            :rtype: int
+        """
+
+        sql = u'''
+            UPDATE admin_user
+            SET `password` = %s,
+                `update_datetime` = %s
+            WHERE user_name = %s
+        '''
+
+        args = (
+            admin_user.password,
+            admin_user.update_datetime,
+            admin_user.user_name
+        )
+
+        return mysql_helper.execute_non_query(sql, args)
+
 
 def _build_admin_user(data):
     u"""

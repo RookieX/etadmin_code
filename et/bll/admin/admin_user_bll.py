@@ -113,6 +113,27 @@ class AdminUserBLL(object):
         return AdminUserDAL.update(admin_user) == 1
 
     @staticmethod
+    def change_password(user_name, password):
+        u"""
+            修改密码
+
+            :param user_name: 用户名
+            :type user_name: unicode
+
+            :param password: 新密码
+            :type password: unicode
+
+            :return: 更新是否成功
+            :rtype: bool
+        """
+
+        user = AdminUser()
+        user.user_name = user_name
+        user.password = password
+        user.update_datetime = datetime.now()
+        return AdminUserDAL.change_password(user) == 1
+
+    @staticmethod
     def __add_department(admin_user):
         u"""
             补全职位信息

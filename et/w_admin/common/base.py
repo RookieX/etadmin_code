@@ -38,8 +38,8 @@ class AdminHandlerBase(SessionHandler):
     def write_error(self, status_code=500, **kwargs):
         if 400 <= status_code < 500:
             self.render('400.html', kwargs.get('error_msg', u'请求出错'))
-        elif 500 <= status_code < 600:
-            self.render('500.html', kwargs.get('error_msg', u'请求出错'))
+        # elif 500 <= status_code < 600:
+        #     self.render('500.html', kwargs.get('error_msg', u'请求出错'))
         else:
             super(AdminHandlerBase, self).write_error(status_code, **kwargs)
 
